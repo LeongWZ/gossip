@@ -1,8 +1,13 @@
 {
   "devDependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.15.0",
+    "@types/css-modules": "^1.0.5",
     "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.55.0",
     "eslint-config-react-app": "^7.0.1",
+    "react-router-dom": "^6.21.0",
     "vite": "^5.0.8",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-ruby": "^5.0.0"
@@ -11,6 +16,8 @@
     "dev": "vite dev"
   },
   "dependencies": {
+    "@mui/icons-material": "^5.15.0",
+    "markdown-to-jsx": "^7.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.3.3"
