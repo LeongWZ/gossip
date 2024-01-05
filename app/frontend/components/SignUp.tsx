@@ -8,15 +8,16 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate, Link as RouterLink, Navigate } from 'react-router-dom';
+import { User } from "./types";
 
 type SignUpProps = {
-    setUserJson: React.Dispatch<React.SetStateAction<string>>;
+    user: User|undefined;
     setToken: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function SignUp(props: SignUpProps) {
-    const {setUserJson, setToken} = props;
+    const {user, setToken} = props;
 
     const navigate = useNavigate();
 
@@ -47,7 +48,6 @@ function SignUp(props: SignUpProps) {
             })
             .then((resJson) => {
                 const {user, token} = resJson;
-                setUserJson(JSON.stringify(user));
                 setToken(token);
                 setShowError(false);
                 navigate("/");
@@ -58,6 +58,10 @@ function SignUp(props: SignUpProps) {
             });
             
     };
+
+    if (user !== undefined) {
+        return <Navigate to="/" />;
+    }
 
     return (
         <Container component="main" maxWidth="xs">

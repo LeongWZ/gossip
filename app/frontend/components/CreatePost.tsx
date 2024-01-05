@@ -15,13 +15,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 const API_ENDPOINT = "/api/v1/posts";
 
 type CreatePostProps = {
-    userJson: string;
+    user: User|undefined;
     token: string;
 };
 
 function CreatePost(props: CreatePostProps) {
-    const {userJson, token} = props;
-    const user: User|undefined = userJson === "" ? undefined : JSON.parse(userJson);
+    const {user, token} = props;
 
     const navigate = useNavigate()
 

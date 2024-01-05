@@ -9,17 +9,18 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { useNavigate, Link as RouterLink, Navigate } from 'react-router-dom';
+import {User} from "./types";
 
 
 type LogInProps = {
-    setUserJson: React.Dispatch<React.SetStateAction<string>>;
+    user: User|undefined;
     setToken: React.Dispatch<React.SetStateAction<string>>;
 };
 
 
 export default function LogIn(props: LogInProps) {
-    const {setUserJson, setToken} = props;
+    const {user, setToken} = props;
 
     const navigate = useNavigate();
 
@@ -50,7 +51,6 @@ export default function LogIn(props: LogInProps) {
             })
             .then(resJson => {
                 const {user, token} = resJson;
-                setUserJson(JSON.stringify(user));
                 setToken(token);
                 setShowError(false);
                 navigate("/");
@@ -61,7 +61,11 @@ export default function LogIn(props: LogInProps) {
             })
     };
 
-  return (
+    if (user !== undefined) {
+        return <Navigate to="/" />;
+    }
+
+    return (
     <Container component="main" maxWidth="xs">
     <CssBaseline />
     <Box
@@ -114,5 +118,5 @@ export default function LogIn(props: LogInProps) {
         </Box>
     </Box>
     </Container>
-  );
+    );
 }

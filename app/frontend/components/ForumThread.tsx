@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { Post, Comment } from './types';
+import { Post, Comment, User } from './types';
 import PostContent from './PostContent';
 import CreateComment from './CreateComment';
 import CommentContent from './CommentContent';
@@ -18,12 +18,12 @@ function getCommentsUrl(id: number): string {
 }
 
 type ForumThreadProps = {
-    userJson: string;
+    user: User|undefined;
     token: string;
 }
 
 function ForumThread(props: ForumThreadProps) {
-    const {userJson, token} = props;
+    const {user, token} = props;
 
     const params = useParams() as { post_id: string };
     const post_id = parseInt(params.post_id, 10);
@@ -56,15 +56,15 @@ function ForumThread(props: ForumThreadProps) {
         <Container fixed={true}>
             {post === undefined
                 ? <Typography variant="body2">Loading... </Typography>
-                : <PostContent userJson={userJson} token={token} post={post} />
+                : <PostContent user={user} token={token} post={post} />
             }
             <br />
             <Typography variant="h5" gutterBottom>
                 {post === undefined ? 0 : post.comments_count} Comments
             </Typography>
-            <CreateComment userJson={userJson} token={token} post_id={post_id} refreshComments={handleFetchComments}/>
+            <CreateComment user={user} token={token} post_id={post_id} refreshComments={handleFetchComments}/>
             {comments.map((comment) =>
-                <CommentContent userJson={userJson} token={token} comment={comment} refreshComments={handleFetchComments} key={comment.id}/>)}
+                <CommentContent user={user} token={token} comment={comment} refreshComments={handleFetchComments} key={comment.id}/>)}
         </Container>
     );
 }

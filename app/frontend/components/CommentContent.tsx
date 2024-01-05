@@ -20,16 +20,15 @@ function getUrl(id: number):string {
 }
 
 type CommentContentProps = {
-    userJson: string;
+    user: User|undefined;
     token: string;
     comment: Comment;
     refreshComments: () => void;
 }
 
 function CommentContent(props: CommentContentProps) {
-    const {userJson, token, comment, refreshComments} = props;
-
-    const user: User|undefined = userJson === "" ? undefined : JSON.parse(userJson);
+    const {user, token, comment, refreshComments} = props;
+    
     const comment_id = comment.id;
     const comment_username = comment.username;
     const [body, setBody] = React.useState<string>(comment.body);

@@ -11,41 +11,60 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import SignUp from './SignUp';
 import LogIn from './LogIn';
 import useStorageState from './useStorageState';
+import {User} from "./types";
 
 
 function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode: prefersDarkMode ? 'dark' : 'light',
-          //mode: "light",
-        },
-      }),
-    [prefersDarkMode],
-  );
+	const theme = React.useMemo(
+	() =>
+		createTheme({
+		palette: {
+			mode: prefersDarkMode ? 'dark' : 'light',
+			//mode: "light",
+		},
+		}),
+	[prefersDarkMode],
+	);
 
-  const [userJson, setUserJson] = useStorageState("userJson", "");
-  const [token, setToken] = useStorageState("token", "");
+	const [token, setToken] = useStorageState("token", "");
+	const [user, setUser] = React.useState<User|undefined>(undefined);
 
-  return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Header userJson={userJson} setUserJson={setUserJson} setToken={setToken} />
-        <Routes>
-          <Route path="/" element={ <Main />} />
-          <Route path="/threads/:post_id" element={ <ForumThread userJson={userJson} token={token} /> } />
-          <Route path="/create" element={ <CreatePost userJson={userJson} token={token} /> } />
-          <Route path="/signup" element={ <SignUp setUserJson={setUserJson} setToken={setToken} /> } />
-          <Route path="/login" element={ <LogIn setUserJson={setUserJson} setToken={setToken} /> } />
-          <Route path="*" element={ <ErrorPage />} />
-        </Routes>
-      </ThemeProvider>
-    </div>
-  );
+	React.useEffect(() => {
+		fetch("api/v1/me", {
+			method: "GET",
+			headers: {
+			Authorization: `Bearer ${token}`,
+			},
+		})
+			.then((res) => {
+				if (res.status !== 200) {
+					throw res;
+				}
+
+				return res.json();
+			})
+			.then((user) => setUser(user))
+			.catch((err) => console.log(err.statusText, "/ No user found"))
+	}, [token]);
+
+	return (
+	<div>
+		<ThemeProvider theme={theme}>
+		<CssBaseline />
+		<Header user={user} setToken={setToken} />
+		<Routes>
+			<Route path="/" element={ <Main />} />
+			<Route path="/threads/:post_id" element={ <ForumThread user={user} token={token} /> } />
+			<Route path="/create" element={ <CreatePost user={user} token={token} /> } />
+			<Route path="/signup" element={ <SignUp user={user} setToken={setToken} /> } />
+			<Route path="/login" element={ <LogIn user={user} setToken={setToken} /> } />
+			<Route path="*" element={ <ErrorPage />} />
+		</Routes>
+		</ThemeProvider>
+	</div>
+	);
 };
 
 export default App;

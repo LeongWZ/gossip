@@ -14,15 +14,14 @@ import { Link as RouterLink } from 'react-router-dom';
 const API_ENDPOINT = "/api/v1/comments";
 
 type CreateCommentProps = {
-    userJson: string;
+    user: User|undefined;
     token: string;
     post_id: number;
     refreshComments: () => void;
 };
 
 function CreateComment(props: CreateCommentProps) {
-    const {userJson, token, post_id, refreshComments} = props;
-    const user: User|undefined = userJson === "" ? undefined : JSON.parse(userJson);
+    const {user, token, post_id, refreshComments} = props;
 
     const [body, setBody] = React.useState<string>('');
 

@@ -13,14 +13,12 @@ import { User } from './types'
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 
 type HeaderProps = {
-    userJson: string;
-    setUserJson: React.Dispatch<React.SetStateAction<string>>;
+    user: User|undefined
     setToken: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function Header(props: HeaderProps) {
-    const { userJson, setUserJson, setToken } = props;
-    const user: User|undefined = userJson === "" ? undefined : JSON.parse(userJson);
+    const { user, setToken } = props;
 
     const navigate = useNavigate();
 
@@ -35,8 +33,6 @@ function Header(props: HeaderProps) {
     };
 
     function handleClickLogOut() {
-        localStorage.removeItem("userJson");
-        setUserJson("");
         localStorage.removeItem("token");
         setToken("");
         handleCloseLogOutDialog();

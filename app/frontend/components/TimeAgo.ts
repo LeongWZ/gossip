@@ -12,7 +12,7 @@ export default function timeAgo(date: string): string {
 
     function helper(i: number, time: number): string {
         if (i > timeTable.length - 1) {
-            return time === 1 ? `a year ago` : `${time} years ago`;
+            return time === 1 ? `${time} year ago` : `${time} years ago`;
         }
 
         const convertedTime = Math.floor(time / timeTable[i][0]);

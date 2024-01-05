@@ -21,14 +21,13 @@ function getUrl(id: number):string {
 }
 
 type PostContentProps = {
-    userJson: string;
+    user: User|undefined;
     token: string;
     post: Post;
 }
 
 function PostContent(props: PostContentProps) {
-    const {userJson, token, post} = props;
-    const user: User|undefined = userJson === "" ? undefined : JSON.parse(userJson);
+    const {user, token, post} = props;
 
     const navigate = useNavigate();
 
