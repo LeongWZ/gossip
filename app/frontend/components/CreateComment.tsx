@@ -1,29 +1,29 @@
-import * as React from 'react';
-import { Button, Card, CardContent, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import { User } from "./types";
-import { Link as RouterLink } from 'react-router-dom';
+import * as React from "react";
+import { Button, Card, CardContent, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { Link as RouterLink } from "react-router-dom";
 
 const API_ENDPOINT = "/api/v1/comments";
 
 type CreateCommentProps = {
-    user: User|undefined;
+    user: User | undefined;
     token: string;
     post_id: number;
     refreshComments: () => void;
 };
 
 function CreateComment(props: CreateCommentProps) {
-    const {user, token, post_id, refreshComments} = props;
+    const { user, token, post_id, refreshComments } = props;
 
-    const [body, setBody] = React.useState<string>('');
+    const [body, setBody] = React.useState<string>("");
 
     function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -31,7 +31,7 @@ function CreateComment(props: CreateCommentProps) {
         if (user === undefined) {
             return;
         }
-        
+
         fetch(API_ENDPOINT, {
             method: "POST",
             headers: {
@@ -44,16 +44,18 @@ function CreateComment(props: CreateCommentProps) {
                     username: user.username,
                     post_id: post_id,
                     body: body,
-                }
+                },
             }),
         })
             .then((res) => res.json())
             .then((res_json) => {
-                setBody('');
+                setBody("");
                 refreshComments();
             })
-            .catch((err) => {console.error(err)});
-    };
+            .catch((err) => {
+                console.error(err);
+            });
+    }
 
     const [openLogInDialog, setOpenLogInDialog] = React.useState<boolean>(false);
 
@@ -68,30 +70,27 @@ function CreateComment(props: CreateCommentProps) {
     return (
         <Card variant="outlined">
             <CardContent>
-                {user === undefined 
-                    ? <>
+                {user === undefined ? (
+                    <>
                         <Button onClick={handleClickAddComment}>Add comment</Button>
-                        <Dialog
-                            open={openLogInDialog}
-                            fullWidth
-                        >
+                        <Dialog open={openLogInDialog} fullWidth>
                             <DialogTitle
                                 sx={{
-                                    display:'flex',
-                                    justifyContent:'space-between',
+                                    display: "flex",
+                                    justifyContent: "space-between",
                                     paddingRight: 1,
                                     paddingBottom: 1,
                                     borderBottom: 1,
-                                    borderColor: 'divider'
+                                    borderColor: "divider",
                                 }}
                             >
                                 Log in / Sign up to comment
-                                <IconButton onClick={handleCloseLogInDialog} size='small' sx={{ paddingTop:'0px' }}>
+                                <IconButton onClick={handleCloseLogInDialog} size="small" sx={{ paddingTop: "0px" }}>
                                     <CloseIcon />
                                 </IconButton>
                             </DialogTitle>
                             <DialogContent>
-                                <DialogContentText sx={{ paddingTop: 3, paddingBottom: 2}}>
+                                <DialogContentText sx={{ paddingTop: 3, paddingBottom: 2 }}>
                                     You must log in to an account before you can comment
                                 </DialogContentText>
                             </DialogContent>
@@ -104,10 +103,11 @@ function CreateComment(props: CreateCommentProps) {
                                 </Button>
                             </DialogActions>
                         </Dialog>
-                      </>
-                    : <form onSubmit={handleCreateSubmit}>
-                            <Typography variant='h6'>Create Comment</Typography>
-                            <TextField
+                    </>
+                ) : (
+                    <form onSubmit={handleCreateSubmit}>
+                        <Typography variant="h6">Create Comment</Typography>
+                        <TextField
                             value={body}
                             onChange={(event) => setBody(event.target.value)}
                             required
@@ -118,12 +118,14 @@ function CreateComment(props: CreateCommentProps) {
                             id="body"
                             margin="dense"
                             inputProps={{ maxLength: 5000 }}
-                            />
-                            <div style={{ float:"right", margin:"10px 5px 10px 0px"}}> 
-                                <Button type='submit' variant='outlined'>Submit</Button>
-                            </div>
-                      </form>
-                }
+                        />
+                        <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
+                            <Button type="submit" variant="outlined">
+                                Submit
+                            </Button>
+                        </div>
+                    </form>
+                )}
             </CardContent>
         </Card>
     );

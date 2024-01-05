@@ -7,7 +7,7 @@ export default function timeAgo(date: string): string {
         [60, "minute"],
         [24, "hour"],
         [30, "day"],
-        [12, "month"]
+        [12, "month"],
     ];
 
     function helper(i: number, time: number): string {
@@ -18,11 +18,11 @@ export default function timeAgo(date: string): string {
         const convertedTime = Math.floor(time / timeTable[i][0]);
 
         if (convertedTime === 0) {
-            return (i === 0 || i === 1)
+            return i === 0 || i === 1
                 ? "just now"
                 : time === 1
-                ? `${time} ${timeTable[i][1]} ago`
-                : `${time} ${timeTable[i][1]}s ago`;
+                  ? `${time} ${timeTable[i][1]} ago`
+                  : `${time} ${timeTable[i][1]}s ago`;
         }
 
         return helper(i + 1, convertedTime);

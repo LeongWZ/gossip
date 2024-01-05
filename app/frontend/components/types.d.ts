@@ -14,7 +14,7 @@ export type Comment = {
     body: string;
     created_at: string;
     updated_at: string;
-}
+};
 
 export type User = {
     id: number;
@@ -22,4 +22,4 @@ export type User = {
     bio: string;
     created_at: string;
     updated_at: string;
-}
+};

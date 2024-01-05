@@ -7,7 +7,6 @@ class Api::V1::UsersController < ApplicationController
     user = User.create!(user_params)
     @token = encode_token(user_id: user.id)
     render json: {
-      user: user,
       token: @token
     }, status: :created
   end

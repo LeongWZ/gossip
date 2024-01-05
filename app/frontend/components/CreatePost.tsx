@@ -1,31 +1,30 @@
-import * as React from 'react';
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { Button, Container, Card, CardContent, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import { User } from "./types";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-
+import * as React from "react";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { Button, Container, Card, CardContent, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const API_ENDPOINT = "/api/v1/posts";
 
 type CreatePostProps = {
-    user: User|undefined;
+    user: User | undefined;
     token: string;
 };
 
 function CreatePost(props: CreatePostProps) {
-    const {user, token} = props;
+    const { user, token } = props;
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const [title, setTitle] = React.useState<string>('');
-    const [body, setBody] = React.useState<string>('');
+    const [title, setTitle] = React.useState<string>("");
+    const [body, setBody] = React.useState<string>("");
 
     function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
@@ -46,22 +45,24 @@ function CreatePost(props: CreatePostProps) {
                     username: user.username,
                     title: title,
                     body: body,
-                }
+                },
             }),
         })
             .then((res) => res.json())
-            .then( (post) => {
+            .then((post) => {
                 navigate(`/threads/${post.id}`);
             })
-            .catch((err) => {console.error(err);});
-    };
+            .catch((err) => {
+                console.error(err);
+            });
+    }
 
     return (
         <Container fixed={true}>
             <Card variant="outlined">
                 <CardContent>
                     <form onSubmit={handleCreateSubmit}>
-                        <Typography variant='h5'>Create post</Typography>
+                        <Typography variant="h5">Create post</Typography>
                         <TextField
                             value={title}
                             onChange={(event) => setTitle(event.target.value)}
@@ -69,7 +70,7 @@ function CreatePost(props: CreatePostProps) {
                             fullWidth
                             label="Post title"
                             id="title"
-                            margin='normal'
+                            margin="normal"
                             inputProps={{ maxLength: 120 }}
                         />
                         <TextField
@@ -84,36 +85,35 @@ function CreatePost(props: CreatePostProps) {
                             margin="dense"
                             inputProps={{ maxLength: 5000 }}
                         />
-                        <div style={{ float:"right", margin:"10px 5px 10px 0px"}}> 
-                        <Button type='submit' variant='outlined'>Submit</Button>
+                        <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
+                            <Button type="submit" variant="outlined">
+                                Submit
+                            </Button>
                         </div>
                     </form>
                 </CardContent>
             </Card>
-            <Dialog
-                open={user === undefined}
-                fullWidth
-            >
+            <Dialog open={user === undefined} fullWidth>
                 <DialogTitle
                     sx={{
-                        display:'flex',
-                        justifyContent:'space-between',
+                        display: "flex",
+                        justifyContent: "space-between",
                         paddingRight: 1,
                         paddingBottom: 1,
                         borderBottom: 1,
-                        borderColor: 'divider'
+                        borderColor: "divider",
                     }}
                 >
                     Log in / Sign up to post
-                    <IconButton component={RouterLink} to="/" size="small" sx={{ paddingTop: '0px' }}>
+                    <IconButton component={RouterLink} to="/" size="small" sx={{ paddingTop: "0px" }}>
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText sx={{ paddingTop: 3, paddingBottom: 3}}>
+                    <DialogContentText sx={{ paddingTop: 3, paddingBottom: 3 }}>
                         You must log in to an account before you can post
                     </DialogContentText>
-                    <Button component={RouterLink} to="/" color="secondary" sx={{ padding: 0}}>
+                    <Button component={RouterLink} to="/" color="secondary" sx={{ padding: 0 }}>
                         Go back
                     </Button>
                 </DialogContent>

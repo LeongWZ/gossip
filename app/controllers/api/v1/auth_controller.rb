@@ -6,7 +6,6 @@ class Api::V1::AuthController < ApplicationController
     @user = User.find_by!(username: login_params[:username])
     @token = encode_token(user_id: @user.id)
     render json: {
-        user: @user,
         token: @token
     }, status: :accepted
   end
