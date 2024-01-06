@@ -42,7 +42,7 @@ function Main() {
             // clean up
             window.removeEventListener("scroll", handleScroll);
         };
-    }, [isLoading]);
+    });
 
     return (
         <Container fixed={true}>

@@ -1,5 +1,5 @@
 import { Post, User } from "./types";
-import timeAgo from "./TimeAgo";
+import time_ago from "./time_ago";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, CardActions, IconButton } from "@mui/material";
@@ -34,7 +34,7 @@ function PostContent(props: PostContentProps) {
     const post_username = post.username;
     const [title, setTitle] = React.useState<string>(post.title);
     const [body, setBody] = React.useState<string>(post.body);
-    const created_time_ago = timeAgo(post.created_at);
+    const created_time_ago = time_ago(post.created_at);
 
     // EDIT
     const [editMode, setEditMode] = React.useState(false);

@@ -56,7 +56,7 @@ function ForumThread(props: ForumThreadProps) {
                 console.error(err);
             });
     };
-    React.useEffect(handleFetchComments, []);
+    React.useEffect(handleFetchComments);
 
     return (
         <Container fixed={true}>

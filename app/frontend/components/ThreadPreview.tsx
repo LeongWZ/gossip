@@ -1,6 +1,6 @@
 import { Post } from "./types";
 import styles from "./App.module.css";
-import timeAgo from "./TimeAgo";
+import time_ago from "./time_ago";
 import * as React from "react";
 import { Card, CardContent, CardActionArea, CardActions, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -26,7 +26,7 @@ function ThreadPreview(props: ThreadPreviewProps) {
                         {item.title}
                     </Typography>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary" gutterBottom>
-                        Posted by {item.username} · {timeAgo(item.created_at)}
+                        Posted by {item.username} · {time_ago(item.created_at)}
                     </Typography>
                     <Typography
                         className={item.body.length > 250 ? styles.fadedown : ""}

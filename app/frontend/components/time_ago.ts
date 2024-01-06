@@ -1,4 +1,4 @@
-export default function timeAgo(date: string): string {
+function time_ago(date: string): string {
     const elapsedMilliseconds: number = new Date().getTime() - new Date(date).getTime();
 
     const timeTable: [number, string][] = [
@@ -30,3 +30,5 @@ export default function timeAgo(date: string): string {
 
     return helper(0, elapsedMilliseconds);
 }
+
+export default time_ago;

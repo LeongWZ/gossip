@@ -1,5 +1,5 @@
 import { Comment, User } from "./types";
-import timeAgo from "./TimeAgo";
+import time_ago from "./time_ago";
 import * as React from "react";
 import { Button, Card, CardContent, CardActions, IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -31,7 +31,7 @@ function CommentContent(props: CommentContentProps) {
     const comment_id = comment.id;
     const comment_username = comment.username;
     const [body, setBody] = React.useState<string>(comment.body);
-    const created_time_ago = timeAgo(comment.created_at);
+    const created_time_ago = time_ago(comment.created_at);
 
     // EDIT
     const [editMode, setEditMode] = React.useState(false);

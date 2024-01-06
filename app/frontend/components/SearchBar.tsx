@@ -50,7 +50,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-function SearchBar(props) {
+function SearchBar() {
     return (
         <Paper>
             <Toolbar

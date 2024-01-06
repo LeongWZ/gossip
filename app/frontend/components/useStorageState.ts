@@ -1,9 +1,6 @@
 import * as React from "react";
 
-export default function useStorageState(
-    key: string,
-    initialState: string,
-): [string, React.Dispatch<React.SetStateAction<string>>] {
+function useStorageState(key: string, initialState: string): [string, React.Dispatch<React.SetStateAction<string>>] {
     const [value, setValue] = React.useState<string>(localStorage.getItem(key) || initialState);
 
     React.useEffect(() => {
@@ -12,3 +9,5 @@ export default function useStorageState(
 
     return [value, setValue];
 }
+
+export default useStorageState;

@@ -17,7 +17,7 @@ type LogInProps = {
     setToken: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function LogIn(props: LogInProps) {
+function LogIn(props: LogInProps) {
     const { user, setToken } = props;
 
     const navigate = useNavigate();
@@ -113,3 +113,5 @@ export default function LogIn(props: LogInProps) {
         </Container>
     );
 }
+
+export default LogIn;
