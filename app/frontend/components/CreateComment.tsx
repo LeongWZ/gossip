@@ -1,6 +1,6 @@
 import { User } from "./types";
 import * as React from "react";
-import { Button, Card, CardContent, IconButton } from "@mui/material";
+import { Button, Card, CardContent, Divider, IconButton, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -93,13 +93,18 @@ function CreateComment(props: CreateCommentProps) {
                                 <DialogContentText sx={{ paddingTop: 3, paddingBottom: 2 }}>
                                     You must log in to an account before you can comment
                                 </DialogContentText>
+                                <Stack direction="row" spacing={2}>
+                                    <Button component={RouterLink} to="/login">
+                                        Log in
+                                    </Button>
+                                    <Button component={RouterLink} to="/signup">
+                                        Sign up
+                                    </Button>
+                                </Stack>
                             </DialogContent>
                             <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                                <Button component={RouterLink} to="/login" variant="outlined">
-                                    Log in
-                                </Button>
-                                <Button component={RouterLink} to="/signup" variant="outlined">
-                                    Sign up
+                                <Button onClick={handleCloseLogInDialog} variant="outlined">
+                                    Cancel
                                 </Button>
                             </DialogActions>
                         </Dialog>

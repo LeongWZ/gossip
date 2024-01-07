@@ -103,6 +103,39 @@ function CommentContent(props: CommentContentProps) {
             });
     }
 
+    const DeleteDialog = (
+        <Dialog open={openDeleteDialog} onClose={handleClickOpenDeleteDialog} fullWidth={true}>
+            <DialogTitle
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingRight: 1,
+                    paddingBottom: 1,
+                    borderBottom: 1,
+                    borderColor: "divider",
+                }}
+            >
+                Delete comment
+                <IconButton onClick={handleCloseDeleteDialog} size="small" sx={{ paddingTop: "0px" }}>
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText sx={{ paddingTop: "20px" }}>
+                    Are you sure you want to delete your comment?
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
+                <Button variant="outlined" onClick={handleCloseDeleteDialog}>
+                    Keep
+                </Button>
+                <Button variant="outlined" color="error" onClick={handleClickDeleteComment} autoFocus>
+                    Delete
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+
     return (
         <Card variant="outlined">
             {editMode ? (
@@ -155,37 +188,8 @@ function CommentContent(props: CommentContentProps) {
                                 </Button>
                             </>
                         )}
-                        <Dialog open={openDeleteDialog} onClose={handleClickOpenDeleteDialog} fullWidth={true}>
-                            <DialogTitle
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    paddingRight: 1,
-                                    paddingBottom: 1,
-                                    borderBottom: 1,
-                                    borderColor: "divider",
-                                }}
-                            >
-                                Delete comment
-                                <IconButton onClick={handleCloseDeleteDialog} size="small" sx={{ paddingTop: "0px" }}>
-                                    <CloseIcon />
-                                </IconButton>
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText sx={{ paddingTop: "20px" }}>
-                                    Are you sure you want to delete your comment?
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                                <Button variant="outlined" onClick={handleCloseDeleteDialog}>
-                                    Keep
-                                </Button>
-                                <Button variant="outlined" color="error" onClick={handleClickDeleteComment} autoFocus>
-                                    Delete
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
                     </CardActions>
+                    {DeleteDialog}
                 </>
             )}
         </Card>

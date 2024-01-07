@@ -38,6 +38,37 @@ function Header(props: HeaderProps) {
         navigate("/");
     }
 
+    const LogOutDialog = (
+        <Dialog open={openLogOutDialog} fullWidth>
+            <DialogTitle
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingRight: 1,
+                    paddingBottom: 1,
+                    borderBottom: 1,
+                    borderColor: "divider",
+                }}
+            >
+                Log out
+                <IconButton onClick={handleCloseLogOutDialog} size="small" sx={{ paddingTop: "0px" }}>
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText sx={{ paddingTop: "20px" }}>Are you sure you want to log out?</DialogContentText>
+            </DialogContent>
+            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
+                <Button variant="outlined" onClick={handleCloseLogOutDialog}>
+                    Cancel
+                </Button>
+                <Button variant="outlined" onClick={handleClickLogOut} color="error" autoFocus>
+                    Log out
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
+
     return (
         <>
             <Toolbar
@@ -83,36 +114,7 @@ function Header(props: HeaderProps) {
                                 Log out
                             </Button>
                         </Stack>
-                        <Dialog open={openLogOutDialog} fullWidth>
-                            <DialogTitle
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    paddingRight: 1,
-                                    paddingBottom: 1,
-                                    borderBottom: 1,
-                                    borderColor: "divider",
-                                }}
-                            >
-                                Log out
-                                <IconButton onClick={handleCloseLogOutDialog} size="small" sx={{ paddingTop: "0px" }}>
-                                    <CloseIcon />
-                                </IconButton>
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText sx={{ paddingTop: "20px" }}>
-                                    Are you sure you want to log out?
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                                <Button variant="outlined" onClick={handleCloseLogOutDialog}>
-                                    Cancel
-                                </Button>
-                                <Button variant="outlined" onClick={handleClickLogOut} color="error" autoFocus>
-                                    Log out
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
+                        {LogOutDialog}
                     </>
                 )}
             </Toolbar>

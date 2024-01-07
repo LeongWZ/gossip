@@ -7,6 +7,8 @@ import CreatePost from "./CreatePost";
 import ErrorPage from "./ErrorPage";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
+import ProtectedComponent from "./ProtectedComponent";
+import AuthComponent from "./AuthComponent";
 import * as React from "react";
 import { Route, Routes } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -49,9 +51,30 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Main />} />
                     <Route path="/threads/:post_id" element={<ForumThread user={user} token={token} />} />
-                    <Route path="/create" element={<CreatePost user={user} token={token} />} />
-                    <Route path="/signup" element={<SignUp user={user} setToken={setToken} />} />
-                    <Route path="/login" element={<LogIn user={user} setToken={setToken} />} />
+                    <Route
+                        path="/create"
+                        element={
+                            <ProtectedComponent user={user}>
+                                <CreatePost user={user} token={token} />
+                            </ProtectedComponent>
+                        }
+                    />
+                    <Route
+                        path="/signup"
+                        element={
+                            <AuthComponent user={user}>
+                                <SignUp setToken={setToken} />
+                            </AuthComponent>
+                        }
+                    />
+                    <Route
+                        path="/login"
+                        element={
+                            <AuthComponent user={user}>
+                                <LogIn setToken={setToken} />
+                            </AuthComponent>
+                        }
+                    />
                     <Route path="*" element={<ErrorPage />} />
                 </Routes>
             </ThemeProvider>

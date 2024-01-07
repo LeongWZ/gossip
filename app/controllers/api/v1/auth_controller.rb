@@ -6,17 +6,17 @@ class Api::V1::AuthController < ApplicationController
     @user = User.find_by!(username: login_params[:username])
     @token = encode_token(user_id: @user.id)
     render json: {
-        token: @token
+      token: @token
     }, status: :accepted
   end
 
   private
 
   def login_params
-      params.require(:auth).permit(:username)
+    params.require(:auth).permit(:username)
   end
 
   def handle_record_not_found(e)
-      render json: { message: "User doesn't exist" }, status: :unauthorized
+    render json: { message: "User doesn't exist" }, status: :unauthorized
   end
 end

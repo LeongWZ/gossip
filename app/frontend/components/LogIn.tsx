@@ -1,4 +1,3 @@
-import { User } from "./types";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -10,15 +9,14 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useNavigate, Link as RouterLink, Navigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 
 type LogInProps = {
-    user: User | undefined;
     setToken: React.Dispatch<React.SetStateAction<string>>;
 };
 
 function LogIn(props: LogInProps) {
-    const { user, setToken } = props;
+    const { setToken } = props;
 
     const navigate = useNavigate();
 
@@ -58,10 +56,6 @@ function LogIn(props: LogInProps) {
                 setShowError(true);
             });
     };
-
-    if (user !== undefined) {
-        return <Navigate to="/" />;
-    }
 
     return (
         <Container component="main" maxWidth="xs">

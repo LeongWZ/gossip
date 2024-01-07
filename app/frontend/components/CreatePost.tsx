@@ -93,39 +93,6 @@ function CreatePost(props: CreatePostProps) {
                     </form>
                 </CardContent>
             </Card>
-            <Dialog open={user === undefined} fullWidth>
-                <DialogTitle
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        paddingRight: 1,
-                        paddingBottom: 1,
-                        borderBottom: 1,
-                        borderColor: "divider",
-                    }}
-                >
-                    Log in / Sign up to post
-                    <IconButton component={RouterLink} to="/" size="small" sx={{ paddingTop: "0px" }}>
-                        <CloseIcon />
-                    </IconButton>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText sx={{ paddingTop: 3, paddingBottom: 3 }}>
-                        You must log in to an account before you can post
-                    </DialogContentText>
-                    <Button component={RouterLink} to="/" color="secondary" sx={{ padding: 0 }}>
-                        Go back
-                    </Button>
-                </DialogContent>
-                <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                    <Button component={RouterLink} to="/login" variant="outlined">
-                        Log in
-                    </Button>
-                    <Button component={RouterLink} to="/signup" variant="outlined">
-                        Sign up
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </Container>
     );
 }
