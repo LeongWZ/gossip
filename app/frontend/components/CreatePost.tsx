@@ -1,15 +1,9 @@
 import { User } from "./types";
 import * as React from "react";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { Button, Container, Card, CardContent, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { useNavigate } from "react-router-dom";
+import { Button, Container, Card, CardContent } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 
 const API_ENDPOINT = "/api/v1/posts";
 

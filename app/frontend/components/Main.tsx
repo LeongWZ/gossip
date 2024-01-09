@@ -5,35 +5,39 @@ import SearchBar from "./SearchBar";
 import { Container } from "@mui/material";
 import * as React from "react";
 
-const API_ENDPOINT = "/api/v1/posts";
+type MainProps = {
+    posts: Post[];
+    postsLimit: number;
+    isPostsLoading: boolean;
+    isPostsSortedByTop: boolean;
+    postSearchQuery: string;
+    setPostsLimit: React.Dispatch<React.SetStateAction<number>>;
+    setPostSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+    sortPostsByTop: () => void;
+    sortPostsByNew: () => void;
+};
 
-function Main() {
-    const [posts, setPosts] = React.useState<Post[]>([]);
-    const rowsToAdd = 20;
-    const [limit, setLimit] = React.useState<number>(rowsToAdd);
-    const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
-    const handleFetchPosts = () => {
-        setIsLoading(true);
-
-        fetch(`${API_ENDPOINT}/?limit=${limit}`)
-            .then((res) => res.json())
-            .then((fetchedPosts) => {
-                setPosts(fetchedPosts);
-                setIsLoading(false);
-            });
-    };
-
-    React.useEffect(handleFetchPosts, [limit]);
+function Main(props: MainProps) {
+    const {
+        posts,
+        postsLimit,
+        isPostsLoading,
+        isPostsSortedByTop,
+        postSearchQuery,
+        setPostsLimit,
+        setPostSearchQuery,
+        sortPostsByTop,
+        sortPostsByNew,
+    } = props;
 
     const handleScroll = () => {
         if (
-            window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight ||
-            isLoading
+            window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight ||
+            isPostsLoading
         ) {
             return;
         }
-        setLimit(limit + rowsToAdd);
+        setPostsLimit(postsLimit + 20);
     };
 
     React.useEffect(() => {
@@ -44,14 +48,25 @@ function Main() {
         };
     });
 
+    const handleSearch = (query: string) => {
+        setPostSearchQuery(query);
+    };
+
     return (
         <Container fixed={true}>
             <ForumBanner />
-            <SearchBar />
+            <SearchBar
+                isSortedByTop={isPostsSortedByTop}
+                searchQuery={postSearchQuery}
+                handleSortByNew={sortPostsByNew}
+                handleSortByTop={sortPostsByTop}
+                handleSearch={handleSearch}
+            />
             {posts.map((item) => (
                 <ThreadPreview item={item} key={item.id} />
             ))}
-            {isLoading && <p>Loading...</p>}
+            {isPostsLoading && <p>Loading...</p>}
+            {!isPostsLoading && postSearchQuery && posts.length === 0 && <p>No results found</p>}
         </Container>
     );
 }

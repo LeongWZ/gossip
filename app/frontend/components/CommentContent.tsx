@@ -142,7 +142,9 @@ function CommentContent(props: CommentContentProps) {
                 <>
                     <CardContent>
                         <form onSubmit={handleEditSubmit}>
-                            <Typography variant="h5">Edit comment</Typography>
+                            <Typography variant="h6" gutterBottom>
+                                Edit comment
+                            </Typography>
                             <TextField
                                 value={body}
                                 onChange={(event) => setBody(event.target.value)}

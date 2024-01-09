@@ -85,7 +85,7 @@ function Header(props: HeaderProps) {
                     variant="h5"
                     color="inherit"
                     align="left"
-                    sx={{ textDecoration: "None", paddingTop: 1 }}
+                    sx={{ textDecoration: "None", paddingTop: 1, paddingBottom: 1 }}
                 >
                     Gossip
                 </Typography>
@@ -102,15 +102,10 @@ function Header(props: HeaderProps) {
                 ) : (
                     <>
                         <Stack direction="row" spacing={2}>
-                            <Typography textAlign="center" flex={1} paddingTop={1}>
+                            <Typography textAlign="center" flex={1} paddingTop={1} paddingBottom={1}>
                                 Welcome {user.username}
                             </Typography>
-                            <Button
-                                variant="outlined"
-                                onClick={handleClickOpenLogOutDialog}
-                                size="small"
-                                sx={{ paddingTop: 1 }}
-                            >
+                            <Button variant="outlined" onClick={handleClickOpenLogOutDialog} size="small">
                                 Log out
                             </Button>
                         </Stack>

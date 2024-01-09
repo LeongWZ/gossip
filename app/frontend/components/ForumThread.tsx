@@ -2,20 +2,14 @@ import { Post, Comment, User } from "./types";
 import PostContent from "./PostContent";
 import CreateComment from "./CreateComment";
 import CommentContent from "./CommentContent";
+import ErrorPage from "./ErrorPage";
 import * as React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import { Box, Button } from "@mui/material";
 
-const API_BASE = "/api/v1/posts";
-
-function getPostUrl(id: number): string {
-    return `${API_BASE}/${id}`;
-}
-
-function getCommentsUrl(id: number): string {
-    return `${API_BASE}/${id}/comments`;
-}
+const API_ENDPOINT = "/api/v1/posts";
 
 type ForumThreadProps = {
     user: User | undefined;
@@ -28,26 +22,35 @@ function ForumThread(props: ForumThreadProps) {
     const params = useParams() as { post_id: string };
     const post_id = parseInt(params.post_id, 10);
 
-    const navigate = useNavigate();
-
-    const [post, setPost] = React.useState<Post>();
+    const [post, setPost] = React.useState<Post | undefined>(undefined);
     const [comments, setComments] = React.useState<Comment[]>([]);
 
+    const [isPostFetchError, setIsPostFetchError] = React.useState<boolean>(false);
+
+    const [showAllComments, setShowAllComments] = React.useState<boolean>(false);
+
     const handleFetchPost = () => {
-        fetch(getPostUrl(post_id))
-            .then((res) => res.json())
+        fetch(`${API_ENDPOINT}/${post_id}`)
+            .then((res) => {
+                if (res.status !== 200) {
+                    throw res.statusText;
+                }
+                return res.json();
+            })
             .then((post) => {
                 setPost(post);
+                setShowAllComments(showAllComments || post.comments_count <= 5);
+                setIsPostFetchError(false);
             })
             .catch((err) => {
                 console.error(err);
-                navigate("error");
+                setIsPostFetchError(true);
             });
     };
-    React.useEffect(handleFetchPost, [comments]);
+    React.useEffect(handleFetchPost, [post_id, showAllComments, comments]);
 
     const handleFetchComments = () => {
-        fetch(getCommentsUrl(post_id))
+        fetch(`${API_ENDPOINT}/${post_id}/comments` + (showAllComments ? "" : "/?limit=5"))
             .then((res) => res.json())
             .then((comments) => {
                 setComments(comments);
@@ -56,20 +59,35 @@ function ForumThread(props: ForumThreadProps) {
                 console.error(err);
             });
     };
-    React.useEffect(handleFetchComments);
+    React.useEffect(handleFetchComments, [post_id, showAllComments]);
+
+    const handleClickShowAllComments = () => {
+        setShowAllComments(true);
+    };
+
+    if (isPostFetchError) {
+        return <ErrorPage />;
+    }
 
     return (
         <Container fixed={true}>
-            {post === undefined ? (
-                <Typography variant="body2">Loading... </Typography>
-            ) : (
+            {post ? (
                 <PostContent user={user} token={token} post={post} />
+            ) : (
+                <Typography variant="body2">Loading... </Typography>
             )}
             <br />
             <Typography variant="h5" gutterBottom>
-                {post === undefined ? 0 : post.comments_count} Comments
+                {post ? post.comments_count : 0} Comments
             </Typography>
             <CreateComment user={user} token={token} post_id={post_id} refreshComments={handleFetchComments} />
+            {!showAllComments && (
+                <Box paddingTop={2} paddingBottom={2}>
+                    <Button onClick={handleClickShowAllComments} fullWidth>
+                        Show all {post ? post.comments_count : 0} comments
+                    </Button>
+                </Box>
+            )}
             {comments.map((comment) => (
                 <CommentContent
                     user={user}

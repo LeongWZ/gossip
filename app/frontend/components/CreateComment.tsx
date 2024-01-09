@@ -1,6 +1,6 @@
 import { User } from "./types";
 import * as React from "react";
-import { Button, Card, CardContent, Divider, IconButton, Stack } from "@mui/material";
+import { Button, Card, CardContent, IconButton, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
@@ -47,8 +47,7 @@ function CreateComment(props: CreateCommentProps) {
                 },
             }),
         })
-            .then((res) => res.json())
-            .then((res_json) => {
+            .then((res) => {
                 setBody("");
                 refreshComments();
             })

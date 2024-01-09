@@ -2,7 +2,13 @@ class Api::V1::CommentsController < ApplicationController
   skip_before_action :authorized, only: [:index, :show]
 
   def index
-    if params[:post_id]
+    if params[:limit] && params[:post_id]
+      @comments = Post.find(params[:post_id]).comments.order(
+        created_at: :desc
+      ).limit(
+        params[:limit]
+      ).reverse
+    elsif params[:post_id]
       @comments = Post.find(params[:post_id]).comments
     else
       @comments = Comment.all
