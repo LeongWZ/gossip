@@ -3,6 +3,7 @@ export type Post = {
     username: string;
     title: string;
     body: string;
+    category_id: number;
     created_at: string;
     updated_at: string;
     comments_count: number;
@@ -22,4 +23,12 @@ export type User = {
     bio: string;
     created_at: string;
     updated_at: string;
+};
+
+export type Category = {
+    id: number;
+    name: string;
+    created_at: string;
+    updated_at: string;
+    posts_count: number;
 };

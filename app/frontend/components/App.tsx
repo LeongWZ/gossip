@@ -1,4 +1,4 @@
-import { User, Post } from "./types";
+import { User, Post, Category } from "./types";
 import useStorageState from "./useStorageState";
 import Main from "./Main";
 import ForumThread from "./ForumThread";
@@ -47,6 +47,31 @@ function App() {
             .then((user) => setUser(user));
     }, [token]);
 
+    // Fetch categories
+    const [categories, setCategories] = React.useState<Category[]>([]);
+
+    const handleFetchCategories = () => {
+        fetch(`${API_ENDPOINT}/categories`)
+            .then((res) => {
+                return res.json();
+            })
+            .then((fetchedCategories) => {
+                setCategories(fetchedCategories);
+            })
+            .catch((err) => console.error(err));
+    };
+    React.useEffect(handleFetchCategories, []);
+
+    const [categoryIdFilter, setCategoryIdFilter] = React.useState<number>(0);
+
+    const filterPostsByCategory = (category_id: number) => {
+        // To be passed down to Main as props
+        // Filter posts by category using category.id
+        setPostsLimit(20);
+        setIsPostsSortedByTop(true);
+        setCategoryIdFilter(category_id);
+    };
+
     // Fetch posts
     const [posts, setPosts] = React.useState<Post[]>([]);
     const [postsLimit, setPostsLimit] = React.useState<number>(20);
@@ -58,7 +83,9 @@ function App() {
         setIsPostsLoading(true);
 
         fetch(
-            `${API_ENDPOINT}/posts/?limit=${postsLimit}` +
+            API_ENDPOINT +
+                (categoryIdFilter ? `/categories/${categoryIdFilter}` : "") +
+                `/posts/?limit=${postsLimit}` +
                 (isPostsSortedByTop ? "&sort_by=top" : "") +
                 (postSearchQuery ? `&q=${postSearchQuery}` : ""),
         )
@@ -72,20 +99,13 @@ function App() {
             .catch((err) => console.error(err));
     };
 
-    React.useEffect(handleFetchPosts, [postsLimit, isPostsSortedByTop, postSearchQuery]);
+    React.useEffect(handleFetchPosts, [categoryIdFilter, postsLimit, isPostsSortedByTop, postSearchQuery]);
 
-    const sortPostsByTop = () => {
+    const sortPosts = (sortByTop: boolean) => {
         // To be passed down to Main as props
         // Sort posts by top when user presses "Top" button
         setPostsLimit(20);
-        setIsPostsSortedByTop(true);
-    };
-
-    const sortPostsByNew = () => {
-        // To be passed down to Main as props
-        // Sort posts by new when user presses "New" button
-        setPostsLimit(20);
-        setIsPostsSortedByTop(false);
+        setIsPostsSortedByTop(sortByTop);
     };
 
     const router = createBrowserRouter([
@@ -94,6 +114,10 @@ function App() {
                 <>
                     <Header user={user} setToken={setToken} />
                     <Outlet />
+                    {/*
+                        Do not remove Outlet!
+                        It allows routes in children below to be accessible.
+                    */}
                 </>
             ),
             children: [
@@ -101,15 +125,17 @@ function App() {
                     path: "/",
                     element: (
                         <Main
+                            categories={categories}
                             posts={posts}
                             postsLimit={postsLimit}
                             isPostsLoading={isPostsLoading}
                             isPostsSortedByTop={isPostsSortedByTop}
                             postSearchQuery={postSearchQuery}
+                            categoryIdFilter={categoryIdFilter}
                             setPostsLimit={setPostsLimit}
                             setPostSearchQuery={setPostSearchQuery}
-                            sortPostsByTop={sortPostsByTop}
-                            sortPostsByNew={sortPostsByNew}
+                            sortPosts={sortPosts}
+                            filterPostsByCategory={filterPostsByCategory}
                         />
                     ),
                 },
@@ -121,7 +147,7 @@ function App() {
                     path: "/create",
                     element: (
                         <ProtectedComponent user={user}>
-                            <CreatePost user={user} token={token} />
+                            <CreatePost user={user} token={token} categories={categories} />
                         </ProtectedComponent>
                     ),
                 },

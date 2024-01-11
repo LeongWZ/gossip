@@ -1,33 +1,38 @@
-import { Post } from "./types";
+import { Category, Post } from "./types";
 import ThreadPreview from "./ThreadPreview";
 import ForumBanner from "./ForumBanner";
 import SearchBar from "./SearchBar";
+import CategoryBar from "./CategoryBar";
 import { Container } from "@mui/material";
 import * as React from "react";
 
 type MainProps = {
+    categories: Category[];
     posts: Post[];
     postsLimit: number;
     isPostsLoading: boolean;
     isPostsSortedByTop: boolean;
     postSearchQuery: string;
+    categoryIdFilter: number;
     setPostsLimit: React.Dispatch<React.SetStateAction<number>>;
     setPostSearchQuery: React.Dispatch<React.SetStateAction<string>>;
-    sortPostsByTop: () => void;
-    sortPostsByNew: () => void;
+    sortPosts: (sortByTop: boolean) => void;
+    filterPostsByCategory: (category_id: number) => void;
 };
 
 function Main(props: MainProps) {
     const {
+        categories,
         posts,
         postsLimit,
         isPostsLoading,
         isPostsSortedByTop,
         postSearchQuery,
+        categoryIdFilter,
         setPostsLimit,
         setPostSearchQuery,
-        sortPostsByTop,
-        sortPostsByNew,
+        sortPosts,
+        filterPostsByCategory,
     } = props;
 
     const handleScroll = () => {
@@ -55,18 +60,22 @@ function Main(props: MainProps) {
     return (
         <Container fixed={true}>
             <ForumBanner />
+            <CategoryBar
+                categories={categories}
+                categoryIdFilter={categoryIdFilter}
+                filterPostsByCategory={filterPostsByCategory}
+            />
             <SearchBar
                 isSortedByTop={isPostsSortedByTop}
                 searchQuery={postSearchQuery}
-                handleSortByNew={sortPostsByNew}
-                handleSortByTop={sortPostsByTop}
+                handleSort={sortPosts}
                 handleSearch={handleSearch}
             />
-            {posts.map((item) => (
-                <ThreadPreview item={item} key={item.id} />
+            {posts.map((post) => (
+                <ThreadPreview item={post} key={post.id} />
             ))}
             {isPostsLoading && <p>Loading...</p>}
-            {!isPostsLoading && postSearchQuery && posts.length === 0 && <p>No results found</p>}
+            {!isPostsLoading && posts.length === 0 && <p>No results found</p>}
         </Container>
     );
 }

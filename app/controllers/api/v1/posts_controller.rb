@@ -1,19 +1,15 @@
 class Api::V1::PostsController < ApplicationController
-  skip_before_action :authorized, only: [:index, :show, :search]
+  skip_before_action :authorized, only: [:index, :show]
 
   def index
-    if params[:q] && params[:limit] && params[:sort_by] == "top"
-      @posts = search(params[:q], params[:limit], params[:sort_by])
-    elsif params[:q] && params[:limit]
-      @posts = search(params[:q], params[:limit])
-    elsif params[:limit] && params[:sort_by] == "top"
-      @posts = Post.order(comments_count: :desc).limit(params[:limit])
+    if params[:q]
+      @posts = search
     elsif params[:limit]
-      @posts = Post.order(created_at: :desc).limit(params[:limit])
-    elsif params[:sort_by] == "top"
-      @posts = Post.order(comments_count: :desc).all
+      @posts = limit
     else
-      @posts = Post.order(created_at: :desc).all
+      @posts = (params[:category_id] ? Category.find(params[:category_id]).posts : Post).order(
+        (params[:sort_by] && params[:sort_by] == "top") ? {comments_count: :desc} : {created_at: :desc}
+      ).all
     end
 
     render json: @posts
@@ -28,7 +24,8 @@ class Api::V1::PostsController < ApplicationController
     @post = Post.create(
       username: post_params[:username],
       title: post_params[:title],
-      body: post_params[:body]
+      body: post_params[:body],
+      category_id: post_params[:category_id]
     )
 
     render json: @post
@@ -52,32 +49,33 @@ class Api::V1::PostsController < ApplicationController
     params.require(:post)
   end
 
-  def search(query, limit, sort_by = "new")
-    if sort_by == "top"
-      @posts = Post.where(
-        "lower(title) LIKE ? or lower(body) LIKE ? or lower(username) LIKE ?",
-        query.downcase,
-        query.downcase,
-        query.downcase
-      ).order(
-        comments_count: :desc
-      ).limit(
-        params[limit]
-      )
-    else
-      @posts = Post.where(
-        "lower(title) LIKE ? or lower(body) LIKE ? or lower(username) LIKE ?",
-        query.downcase,
-        query.downcase,
-        query.downcase
-      ).order(
-        created_at: :desc
-      ).limit(
-        params[limit]
-      )
-    end
+  def search_params
+    params.permit(:q, :limit)
+  end
 
-    return @posts
+  def limit_params
+    params.permit(:limit)
+  end
+
+  def search
+    (params[:category_id] ? Category.find(params[:category_id]).posts : Post).where(
+      "lower(title) LIKE ? or lower(body) LIKE ? or lower(username) LIKE ?",
+      search_params[:q].downcase,
+      search_params[:q].downcase,
+      search_params[:q].downcase
+    ).order(
+      (params[:sort_by] && params[:sort_by] == "top") ? {comments_count: :desc} : {created_at: :desc}
+    ).limit(
+      search_params[:limit]
+    )
+  end
+
+  def limit
+    (params[:category_id] ? Category.find(params[:category_id]).posts : Post).order(
+      (params[:sort_by] && params[:sort_by] == "top") ? {comments_count: :desc} : {created_at: :desc}
+    ).limit(
+      limit_params[:limit]
+    )
   end
 
 end

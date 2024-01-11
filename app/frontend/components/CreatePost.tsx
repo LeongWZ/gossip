@@ -1,7 +1,17 @@
-import { User } from "./types";
+import { User, Category } from "./types";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Container, Card, CardContent } from "@mui/material";
+import {
+    Button,
+    Container,
+    Card,
+    CardContent,
+    FormControl,
+    InputLabel,
+    Select,
+    MenuItem,
+    FormHelperText,
+} from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
@@ -10,14 +20,16 @@ const API_ENDPOINT = "/api/v1/posts";
 type CreatePostProps = {
     user: User | undefined;
     token: string;
+    categories: Category[];
 };
 
 function CreatePost(props: CreatePostProps) {
-    const { user, token } = props;
+    const { user, token, categories } = props;
 
     const navigate = useNavigate();
 
     const [title, setTitle] = React.useState<string>("");
+    const [categoryId, setCategoryId] = React.useState<number>(1);
     const [body, setBody] = React.useState<string>("");
 
     function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -39,6 +51,7 @@ function CreatePost(props: CreatePostProps) {
                     username: user.username,
                     title: title,
                     body: body,
+                    category_id: categoryId,
                 },
             }),
         })
@@ -79,6 +92,24 @@ function CreatePost(props: CreatePostProps) {
                             margin="dense"
                             inputProps={{ maxLength: 5000 }}
                         />
+                        <div>
+                            <FormControl required sx={{ marginTop: 2, marginBottom: 1, minWidth: 120 }}>
+                                <InputLabel id="category-select-required-label">Category</InputLabel>
+                                <Select
+                                    labelId="category-select-required-label"
+                                    id="category-select-required"
+                                    value={categoryId}
+                                    label="Category*"
+                                    onChange={(event) => setCategoryId(event.target.value as number)}
+                                >
+                                    {categories.map((category) => (
+                                        <MenuItem value={category.id} key={category.id}>
+                                            {category.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>
                         <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
                             <Button type="submit" variant="outlined">
                                 Submit

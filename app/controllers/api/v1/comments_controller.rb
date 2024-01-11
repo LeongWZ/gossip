@@ -3,15 +3,9 @@ class Api::V1::CommentsController < ApplicationController
 
   def index
     if params[:limit] && params[:post_id]
-      @comments = Post.find(params[:post_id]).comments.order(
-        created_at: :desc
-      ).limit(
-        params[:limit]
-      ).reverse
-    elsif params[:post_id]
-      @comments = Post.find(params[:post_id]).comments
+      @comments = limit.reverse
     else
-      @comments = Comment.all
+      @comments = params[:post_id] ? Post.find(params[:post_id]).comments : Comment.all
     end
 
     render json: @comments
@@ -46,6 +40,18 @@ class Api::V1::CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment)
+  end
+
+  def limit_params
+    params.require(:limit)
+  end
+
+  def limit
+    (params[:post_id] ? Post.find(params[:post_id]).comments : Comment).order(
+        created_at: :desc
+    ).limit(
+      params[:limit]
+    )
   end
 
 end

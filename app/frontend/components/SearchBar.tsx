@@ -6,7 +6,7 @@ import InputBase from "@mui/material/InputBase";
 import { styled, alpha } from "@mui/material/styles";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
-import { IconButton, InputAdornment, Paper, Typography } from "@mui/material";
+import { IconButton, InputAdornment, Paper, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Search = styled("form")(({ theme }) => ({
@@ -54,13 +54,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 type SearchBarProps = {
     isSortedByTop: boolean;
     searchQuery: string;
-    handleSortByTop: () => void;
-    handleSortByNew: () => void;
+    handleSort: (sortByTop: boolean) => void;
     handleSearch: (query: string) => void;
 };
 
 function SearchBar(props: SearchBarProps) {
-    const { isSortedByTop, searchQuery, handleSortByTop, handleSortByNew, handleSearch } = props;
+    const { isSortedByTop, searchQuery, handleSort, handleSearch } = props;
+
+    const handleChange = (event: React.MouseEvent<HTMLElement>, newIsSortedByTop: boolean | null) => {
+        if (newIsSortedByTop !== null) {
+            handleSort(newIsSortedByTop);
+        }
+    };
 
     const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -85,19 +90,21 @@ function SearchBar(props: SearchBarProps) {
                     backgroundColor: "rgba(0,0,0,0.05)",
                 }}
             >
-                <Stack
-                    direction="row"
-                    divider={<Divider orientation="vertical" flexItem />}
-                    spacing={1}
-                    marginRight={2}
+                <ToggleButtonGroup
+                    color="primary"
+                    exclusive
+                    value={isSortedByTop}
+                    onChange={handleChange}
+                    aria-label="SortBy"
+                    sx={{
+                        marginY: 1,
+                        marginLeft: 0,
+                        marginRight: 2,
+                    }}
                 >
-                    <Button onClick={handleSortByTop} disabled={isSortedByTop} variant="outlined" size="small">
-                        Top
-                    </Button>
-                    <Button onClick={handleSortByNew} disabled={!isSortedByTop} variant="outlined" size="small">
-                        New
-                    </Button>
-                </Stack>
+                    <ToggleButton value={true}>Top</ToggleButton>
+                    <ToggleButton value={false}>New</ToggleButton>
+                </ToggleButtonGroup>
                 <Search onSubmit={handleSearchSubmit}>
                     <SearchIconWrapper>
                         <SearchIcon />
