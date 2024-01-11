@@ -13,11 +13,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
-const API_BASE = "/api/v1/posts";
-
-function getUrl(id: number): string {
-    return `${API_BASE}/${id}`;
-}
+const API_ENDPOINT = "/api/v1/posts";
 
 type PostContentProps = {
     user: User | undefined;
@@ -50,7 +46,7 @@ function PostContent(props: PostContentProps) {
     function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        fetch(getUrl(post_id), {
+        fetch(`${API_ENDPOINT}/${post_id}`, {
             method: "PUT",
             headers: {
                 accept: "application/json",
@@ -66,6 +62,9 @@ function PostContent(props: PostContentProps) {
             }),
         })
             .then((res) => {
+                if (res.status !== 200) {
+                    throw res;
+                }
                 setEditMode(false);
             })
             .catch((err) => {
@@ -85,7 +84,7 @@ function PostContent(props: PostContentProps) {
     };
 
     function handleClickDeletePost() {
-        fetch(getUrl(post_id), {
+        fetch(`${API_ENDPOINT}/${post_id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",
@@ -98,6 +97,9 @@ function PostContent(props: PostContentProps) {
             }),
         })
             .then((res) => {
+                if (res.status !== 200) {
+                    throw res;
+                }
                 navigate(`/`);
             })
             .catch((err) => {

@@ -1,17 +1,7 @@
 import { User, Category } from "./types";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    Button,
-    Container,
-    Card,
-    CardContent,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    FormHelperText,
-} from "@mui/material";
+import { Button, Container, Card, CardContent, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
@@ -29,7 +19,7 @@ function CreatePost(props: CreatePostProps) {
     const navigate = useNavigate();
 
     const [title, setTitle] = React.useState<string>("");
-    const [categoryId, setCategoryId] = React.useState<number>(1);
+    const [categoryId, setCategoryId] = React.useState<number | string>("");
     const [body, setBody] = React.useState<string>("");
 
     function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -55,7 +45,12 @@ function CreatePost(props: CreatePostProps) {
                 },
             }),
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if (res.status !== 201) {
+                    throw res;
+                }
+                return res.json();
+            })
             .then((post) => {
                 navigate(`/threads/${post.id}`);
             })
@@ -99,7 +94,7 @@ function CreatePost(props: CreatePostProps) {
                                     labelId="category-select-required-label"
                                     id="category-select-required"
                                     value={categoryId}
-                                    label="Category*"
+                                    label="Category"
                                     onChange={(event) => setCategoryId(event.target.value as number)}
                                 >
                                     {categories.map((category) => (

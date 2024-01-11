@@ -86,7 +86,7 @@ function App() {
             API_ENDPOINT +
                 (categoryIdFilter ? `/categories/${categoryIdFilter}` : "") +
                 `/posts/?limit=${postsLimit}` +
-                (isPostsSortedByTop ? "&sort_by=top" : "") +
+                (isPostsSortedByTop ? "&sort_by=top" : "&sort_by=new") +
                 (postSearchQuery ? `&q=${postSearchQuery}` : ""),
         )
             .then((res) => {

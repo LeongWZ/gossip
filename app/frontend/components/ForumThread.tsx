@@ -50,10 +50,10 @@ function ForumThread(props: ForumThreadProps) {
     React.useEffect(handleFetchPost, [post_id, showAllComments, comments]);
 
     const handleFetchComments = () => {
-        fetch(`${API_ENDPOINT}/${post_id}/comments` + (showAllComments ? "" : "/?limit=5"))
+        fetch(`${API_ENDPOINT}/${post_id}/comments` + (showAllComments ? "" : "/?sort_by=new&limit=5"))
             .then((res) => res.json())
             .then((comments) => {
-                setComments(comments);
+                setComments(showAllComments ? comments : comments.reverse());
             })
             .catch((err) => {
                 console.error(err);
