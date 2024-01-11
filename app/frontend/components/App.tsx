@@ -90,16 +90,29 @@ function App() {
                 (postSearchQuery ? `&q=${postSearchQuery}` : ""),
         )
             .then((res) => {
+                if (res.status !== 200) {
+                    throw res;
+                }
                 return res.json();
             })
             .then((fetchedPosts) => {
                 setPosts(fetchedPosts);
                 setIsPostsLoading(false);
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+                setIsPostsLoading(false);
+                console.error(err);
+            });
     };
 
     React.useEffect(handleFetchPosts, [categoryIdFilter, postsLimit, isPostsSortedByTop, postSearchQuery]);
+
+    const handleSearchPosts = (query: string) => {
+        // To be passed down to Main as props
+        // Search posts when user submits query using SearchBar's input
+        setPostsLimit(20);
+        setPostSearchQuery(query);
+    };
 
     const sortPosts = (sortByTop: boolean) => {
         // To be passed down to Main as props
@@ -133,8 +146,8 @@ function App() {
                             postSearchQuery={postSearchQuery}
                             categoryIdFilter={categoryIdFilter}
                             setPostsLimit={setPostsLimit}
-                            setPostSearchQuery={setPostSearchQuery}
                             sortPosts={sortPosts}
+                            handleSearchPosts={handleSearchPosts}
                             filterPostsByCategory={filterPostsByCategory}
                         />
                     ),

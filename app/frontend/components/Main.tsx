@@ -15,8 +15,8 @@ type MainProps = {
     postSearchQuery: string;
     categoryIdFilter: number;
     setPostsLimit: React.Dispatch<React.SetStateAction<number>>;
-    setPostSearchQuery: React.Dispatch<React.SetStateAction<string>>;
     sortPosts: (sortByTop: boolean) => void;
+    handleSearchPosts: (query: string) => void;
     filterPostsByCategory: (category_id: number) => void;
 };
 
@@ -30,8 +30,8 @@ function Main(props: MainProps) {
         postSearchQuery,
         categoryIdFilter,
         setPostsLimit,
-        setPostSearchQuery,
         sortPosts,
+        handleSearchPosts,
         filterPostsByCategory,
     } = props;
 
@@ -53,10 +53,6 @@ function Main(props: MainProps) {
         };
     });
 
-    const handleSearch = (query: string) => {
-        setPostSearchQuery(query);
-    };
-
     return (
         <Container fixed={true}>
             <ForumBanner />
@@ -69,7 +65,7 @@ function Main(props: MainProps) {
                 isSortedByTop={isPostsSortedByTop}
                 searchQuery={postSearchQuery}
                 handleSort={sortPosts}
-                handleSearch={handleSearch}
+                handleSearch={handleSearchPosts}
             />
             {posts.map((post) => (
                 <ThreadPreview item={post} key={post.id} />
