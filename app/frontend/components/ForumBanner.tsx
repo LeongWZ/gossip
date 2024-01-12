@@ -32,11 +32,11 @@ function ForumBanner() {
                 <Box
                     sx={{
                         position: "relative",
-                        p: { xs: 3, md: 6 },
+                        p: { xs: 2, md: 4 },
                         pr: { md: 0 },
                     }}
                 >
-                    <Typography component="h1" variant="h3" gutterBottom>
+                    <Typography variant="h4" gutterBottom>
                         Gossip
                     </Typography>
                     <Typography variant="h6" gutterBottom>

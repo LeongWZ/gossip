@@ -9,7 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 const API_ENDPOINT = "/api/v1/comments";
 
@@ -22,6 +22,8 @@ type CreateCommentProps = {
 
 function CreateComment(props: CreateCommentProps) {
     const { user, token, post_id, refreshComments } = props;
+
+    const location = useLocation();
 
     const [body, setBody] = React.useState<string>("");
 
@@ -93,10 +95,10 @@ function CreateComment(props: CreateCommentProps) {
                                     You must log in to an account before you can comment
                                 </DialogContentText>
                                 <Stack direction="row" spacing={2}>
-                                    <Button component={RouterLink} to="/login">
+                                    <Button component={RouterLink} to="/login" replace state={{ from: location }}>
                                         Log in
                                     </Button>
-                                    <Button component={RouterLink} to="/signup">
+                                    <Button component={RouterLink} to="/signup" replace state={{ from: location }}>
                                         Sign up
                                     </Button>
                                 </Stack>

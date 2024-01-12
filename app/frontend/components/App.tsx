@@ -7,7 +7,6 @@ import CreatePost from "./CreatePost";
 import ErrorPage from "./ErrorPage";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
-import ProtectedComponent from "./ProtectedComponent";
 import AuthComponent from "./AuthComponent";
 import * as React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
@@ -158,11 +157,7 @@ function App() {
                 },
                 {
                     path: "/create",
-                    element: (
-                        <ProtectedComponent user={user}>
-                            <CreatePost user={user} token={token} categories={categories} />
-                        </ProtectedComponent>
-                    ),
+                    element: <CreatePost user={user} token={token} categories={categories} />,
                 },
                 {
                     path: "/signup",

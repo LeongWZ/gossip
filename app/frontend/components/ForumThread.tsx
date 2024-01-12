@@ -133,6 +133,7 @@ function ForumThread(props: ForumThreadProps) {
                 handleSort={sortComments}
                 handleSearch={handleSearchComments}
             />
+
             {comments.map((comment) => (
                 <CommentContent
                     user={user}
@@ -142,8 +143,12 @@ function ForumThread(props: ForumThreadProps) {
                     key={comment.id}
                 />
             ))}
-            {isCommentsLoading && <p>Loading...</p>}
-            {!isCommentsLoading && comments.length === 0 && <p>No comments yet</p>}
+
+            <div style={{ minHeight: "300px" }}>
+                {isCommentsLoading && <p>Loading...</p>}
+
+                {!isCommentsLoading && comments.length === 0 && <p>No comments yet</p>}
+            </div>
         </Container>
     );
 }

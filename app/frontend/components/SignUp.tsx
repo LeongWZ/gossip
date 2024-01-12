@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useNavigate, Link as RouterLink, useLocation } from "react-router-dom";
 
 type SignUpProps = {
     setToken: React.Dispatch<React.SetStateAction<string>>;
@@ -18,6 +18,8 @@ function SignUp(props: SignUpProps) {
     const { setToken } = props;
 
     const navigate = useNavigate();
+    const location = useLocation();
+    const { from } = location.state || {};
 
     const [username, setUsername] = React.useState<string>("");
 
@@ -48,7 +50,7 @@ function SignUp(props: SignUpProps) {
                 const { token } = resJson;
                 setToken(token);
                 setShowError(false);
-                navigate("/");
+                navigate(from?.pathname || "/", { replace: true });
             })
             .catch((err) => {
                 setShowError(true);
@@ -98,7 +100,7 @@ function SignUp(props: SignUpProps) {
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link component={RouterLink} to="/login" variant="body2">
+                            <Link component={RouterLink} to="/login" state={{ from: from }} variant="body2">
                                 Already have an account? Log in
                             </Link>
                         </Grid>

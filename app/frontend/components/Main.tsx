@@ -67,11 +67,16 @@ function Main(props: MainProps) {
                 handleSort={sortPosts}
                 handleSearch={handleSearchPosts}
             />
+
             {posts.map((post) => (
                 <ThreadPreview item={post} key={post.id} />
             ))}
-            {isPostsLoading && <p>Loading...</p>}
-            {!isPostsLoading && posts.length === 0 && <p>No results found</p>}
+
+            <div style={{ minHeight: "300px" }}>
+                {isPostsLoading && <p>Loading...</p>}
+
+                {!isPostsLoading && posts.length === 0 && <p>No results found</p>}
+            </div>
         </Container>
     );
 }
