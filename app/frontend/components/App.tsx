@@ -8,11 +8,14 @@ import ErrorPage from "./ErrorPage";
 import SignUp from "./SignUp";
 import LogIn from "./LogIn";
 import AuthComponent from "./AuthComponent";
+import ScrollTop from "./ScrollTop";
 import * as React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Fab } from "@mui/material";
 
 const API_ENDPOINT = "/api/v1";
 
@@ -99,7 +102,6 @@ function App() {
                 setIsPostsLoading(false);
             })
             .catch((err) => {
-                setIsPostsLoading(false);
                 console.error(err);
             });
     };
@@ -125,11 +127,17 @@ function App() {
             element: (
                 <>
                     <Header user={user} setToken={setToken} />
+                    <div id="back-to-top-anchor" />
                     <Outlet />
                     {/*
                         Do not remove Outlet!
                         It allows routes in children below to be accessible.
                     */}
+                    <ScrollTop>
+                        <Fab size="small" aria-label="scroll back to top">
+                            <KeyboardArrowUpIcon />
+                        </Fab>
+                    </ScrollTop>
                 </>
             ),
             children: [

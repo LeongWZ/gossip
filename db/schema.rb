@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_10_133050) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_13_024722) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_133050) do
     t.datetime "updated_at", null: false
     t.bigint "post_id"
     t.string "username"
+    t.integer "replies_count", default: 0
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
@@ -38,7 +39,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_133050) do
     t.integer "comments_count", default: 0
     t.string "username"
     t.bigint "category_id"
+    t.integer "replies_count", default: 0
     t.index ["category_id"], name: "index_posts_on_category_id"
+  end
+
+  create_table "replies", force: :cascade do |t|
+    t.string "username"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "comment_id"
+    t.bigint "post_id"
+    t.index ["comment_id"], name: "index_replies_on_comment_id"
+    t.index ["post_id"], name: "index_replies_on_post_id"
   end
 
   create_table "users", force: :cascade do |t|

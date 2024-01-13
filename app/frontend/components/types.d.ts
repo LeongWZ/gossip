@@ -7,9 +7,20 @@ export type Post = {
     created_at: string;
     updated_at: string;
     comments_count: number;
+    replies_count: number;
 };
 
 export type Comment = {
+    id: number;
+    username: string;
+    post_id: number;
+    body: string;
+    created_at: string;
+    updated_at: string;
+    replies_count: number;
+};
+
+export type Reply = {
     id: number;
     username: string;
     body: string;

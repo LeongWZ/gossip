@@ -58,15 +58,53 @@ function CreateComment(props: CreateCommentProps) {
             });
     }
 
-    const [openLogInDialog, setOpenLogInDialog] = React.useState<boolean>(false);
+    const [openLogInSignUpDialog, setOpenLogInSignUpDialog] = React.useState<boolean>(false);
 
     const handleClickAddComment = () => {
-        setOpenLogInDialog(true);
+        setOpenLogInSignUpDialog(true);
     };
 
     const handleCloseLogInDialog = () => {
-        setOpenLogInDialog(false);
+        setOpenLogInSignUpDialog(false);
     };
+
+    const LogInSignUpDialog = (
+        <Dialog open={openLogInSignUpDialog} fullWidth>
+            <DialogTitle
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingRight: 1,
+                    paddingBottom: 1,
+                    borderBottom: 1,
+                    borderColor: "divider",
+                }}
+            >
+                Log in / Sign up to comment
+                <IconButton onClick={handleCloseLogInDialog} size="small" sx={{ paddingTop: "0px" }}>
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText sx={{ paddingTop: 3, paddingBottom: 2 }}>
+                    You must log in to an account before you can comment
+                </DialogContentText>
+                <Stack direction="row" spacing={2}>
+                    <Button component={RouterLink} to="/login" replace state={{ from: location }}>
+                        Log in
+                    </Button>
+                    <Button component={RouterLink} to="/signup" replace state={{ from: location }}>
+                        Sign up
+                    </Button>
+                </Stack>
+            </DialogContent>
+            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
+                <Button onClick={handleCloseLogInDialog} variant="outlined">
+                    Cancel
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
 
     return (
         <Card variant="outlined">
@@ -74,41 +112,7 @@ function CreateComment(props: CreateCommentProps) {
                 {user === undefined ? (
                     <>
                         <Button onClick={handleClickAddComment}>Add comment</Button>
-                        <Dialog open={openLogInDialog} fullWidth>
-                            <DialogTitle
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    paddingRight: 1,
-                                    paddingBottom: 1,
-                                    borderBottom: 1,
-                                    borderColor: "divider",
-                                }}
-                            >
-                                Log in / Sign up to comment
-                                <IconButton onClick={handleCloseLogInDialog} size="small" sx={{ paddingTop: "0px" }}>
-                                    <CloseIcon />
-                                </IconButton>
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText sx={{ paddingTop: 3, paddingBottom: 2 }}>
-                                    You must log in to an account before you can comment
-                                </DialogContentText>
-                                <Stack direction="row" spacing={2}>
-                                    <Button component={RouterLink} to="/login" replace state={{ from: location }}>
-                                        Log in
-                                    </Button>
-                                    <Button component={RouterLink} to="/signup" replace state={{ from: location }}>
-                                        Sign up
-                                    </Button>
-                                </Stack>
-                            </DialogContent>
-                            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                                <Button onClick={handleCloseLogInDialog} variant="outlined">
-                                    Cancel
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
+                        {LogInSignUpDialog}
                     </>
                 ) : (
                     <form onSubmit={handleCreateSubmit}>

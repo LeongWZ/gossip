@@ -77,7 +77,7 @@ function CreatePost(props: CreatePostProps) {
             });
     }
 
-    const logInSignUpDialog = (
+    const LogInSignUpDialog = (
         <Dialog open={user === undefined} fullWidth>
             <DialogTitle
                 sx={{
@@ -117,12 +117,30 @@ function CreatePost(props: CreatePostProps) {
 
     return (
         <Container fixed={true}>
-            {logInSignUpDialog}
+            {LogInSignUpDialog}
 
             <Card variant="outlined">
                 <CardContent>
                     <form onSubmit={handleCreateSubmit}>
                         <Typography variant="h5">Create post</Typography>
+                        <div>
+                            <FormControl required sx={{ marginTop: 2, marginBottom: 1, minWidth: 120 }}>
+                                <InputLabel id="category-select-required-label">Category</InputLabel>
+                                <Select
+                                    labelId="category-select-required-label"
+                                    id="category-select-required"
+                                    value={categoryId}
+                                    label="Category"
+                                    onChange={(event) => setCategoryId(event.target.value as number)}
+                                >
+                                    {categories.map((category) => (
+                                        <MenuItem value={category.id} key={category.id}>
+                                            {category.name}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>
                         <TextField
                             value={title}
                             onChange={(event) => setTitle(event.target.value)}
@@ -145,24 +163,6 @@ function CreatePost(props: CreatePostProps) {
                             margin="dense"
                             inputProps={{ maxLength: 5000 }}
                         />
-                        <div>
-                            <FormControl required sx={{ marginTop: 2, marginBottom: 1, minWidth: 120 }}>
-                                <InputLabel id="category-select-required-label">Category</InputLabel>
-                                <Select
-                                    labelId="category-select-required-label"
-                                    id="category-select-required"
-                                    value={categoryId}
-                                    label="Category"
-                                    onChange={(event) => setCategoryId(event.target.value as number)}
-                                >
-                                    {categories.map((category) => (
-                                        <MenuItem value={category.id} key={category.id}>
-                                            {category.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </div>
                         <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
                             <Button type="submit" variant="outlined">
                                 Submit

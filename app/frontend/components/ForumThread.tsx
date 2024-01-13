@@ -73,7 +73,6 @@ function ForumThread(props: ForumThreadProps) {
                 setIsCommentsLoading(false);
             })
             .catch((err) => {
-                setIsCommentsLoading(false);
                 console.error(err);
             });
     };
@@ -122,11 +121,13 @@ function ForumThread(props: ForumThreadProps) {
             ) : (
                 <Typography variant="body2">Loading... </Typography>
             )}
-            <br />
-            <Typography variant="h5" gutterBottom>
-                {post ? post.comments_count : 0} Comments
+
+            <Typography variant="h5" gutterBottom paddingTop="40px">
+                {post ? post.comments_count + post.replies_count : 0} Comments
             </Typography>
+
             <CreateComment user={user} token={token} post_id={post_id} refreshComments={handleFetchComments} />
+
             <SearchBar
                 isSortedByTop={isCommentsSortedByTop}
                 searchQuery={commentSearchQuery}

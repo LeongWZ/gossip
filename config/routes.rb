@@ -9,10 +9,14 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :posts do
-        resources :comments, only: [:index, :destroy]
+        resources :comments, only: [:index]
       end
 
-      resources :comments
+      resources :comments do
+        resources :replies, only: [:index]
+      end
+
+      resources :replies
 
       resources :categories do
         resources :posts, only: [:index]

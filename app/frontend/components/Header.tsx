@@ -10,7 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 type HeaderProps = {
     user: User | undefined;
@@ -20,7 +20,7 @@ type HeaderProps = {
 function Header(props: HeaderProps) {
     const { user, setToken } = props;
 
-    const navigate = useNavigate();
+    const location = useLocation();
 
     const [openLogOutDialog, setOpenLogOutDialog] = React.useState<boolean>(false);
 
@@ -35,7 +35,6 @@ function Header(props: HeaderProps) {
     function handleClickLogOut() {
         setToken("");
         handleCloseLogOutDialog();
-        navigate("/");
     }
 
     const LogOutDialog = (
@@ -62,8 +61,10 @@ function Header(props: HeaderProps) {
                 <Button variant="outlined" onClick={handleCloseLogOutDialog}>
                     Cancel
                 </Button>
-                <Button variant="outlined" onClick={handleClickLogOut} color="error" autoFocus>
-                    Log out
+                <Button variant="outlined" color="error" autoFocus>
+                    <a href="/" onClick={handleClickLogOut} style={{ textDecoration: "none", color: "inherit" }}>
+                        Log out
+                    </a>
                 </Button>
             </DialogActions>
         </Dialog>
@@ -92,10 +93,24 @@ function Header(props: HeaderProps) {
 
                 {user === undefined ? (
                     <Stack direction="row" spacing={2}>
-                        <Button component={RouterLink} to="/signup" variant="outlined" size="small">
+                        <Button
+                            component={RouterLink}
+                            to="/signup"
+                            replace
+                            state={{ from: location }}
+                            variant="outlined"
+                            size="small"
+                        >
                             Sign up
                         </Button>
-                        <Button component={RouterLink} to="/login" variant="outlined" size="small">
+                        <Button
+                            component={RouterLink}
+                            to="/login"
+                            replace
+                            state={{ from: location }}
+                            variant="outlined"
+                            size="small"
+                        >
                             Log in
                         </Button>
                     </Stack>

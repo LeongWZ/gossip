@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import { IconButton, InputAdornment, Paper, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import SortIcon from "@mui/icons-material/Sort";
 
 const Search = styled("form")(({ theme }) => ({
     position: "relative",
@@ -90,21 +91,23 @@ function SearchBar(props: SearchBarProps) {
                     backgroundColor: "rgba(0,0,0,0.05)",
                 }}
             >
-                <ToggleButtonGroup
-                    color="primary"
-                    exclusive
-                    value={isSortedByTop}
-                    onChange={handleChange}
-                    aria-label="SortBy"
-                    sx={{
-                        marginY: 1,
-                        marginLeft: 0,
-                        marginRight: 2,
-                    }}
-                >
-                    <ToggleButton value={true}>Top</ToggleButton>
-                    <ToggleButton value={false}>New</ToggleButton>
-                </ToggleButtonGroup>
+                <Stack direction="row" alignItems="center" spacing={1} marginLeft={0} marginRight={2} marginY={1}>
+                    <SortIcon sx={{ justifyContent: "center" }} />
+                    <ToggleButtonGroup
+                        color="primary"
+                        exclusive
+                        value={isSortedByTop}
+                        onChange={handleChange}
+                        aria-label="SortBy"
+                    >
+                        <ToggleButton value={true} sx={{ paddingY: 1 }}>
+                            Top
+                        </ToggleButton>
+                        <ToggleButton value={false} sx={{ paddingY: 1 }}>
+                            New
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </Stack>
                 <Search onSubmit={handleSearchSubmit}>
                     <SearchIconWrapper>
                         <SearchIcon />

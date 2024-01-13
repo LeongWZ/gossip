@@ -40,7 +40,7 @@ class Api::V1::CommentsController < ApplicationController
     comment.save
 
     render json: {
-      message: "Comment (id: #{post_params[:id]}) updated successfully"
+      message: "Comment (id: #{comment_params[:id]}) updated successfully"
     }, status: :ok
   end
 
@@ -64,10 +64,10 @@ class Api::V1::CommentsController < ApplicationController
 
   def sort
     order_option = case params[:sort_by]
-      when "new"
-        { created_at: :desc }
+      when "top"
+        { replies_count: :desc }
       else
-        :id
+        { created_at: :desc }
       end
 
     @comments = @comments.order(order_option)

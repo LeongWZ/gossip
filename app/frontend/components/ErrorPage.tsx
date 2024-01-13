@@ -2,6 +2,7 @@ import * as React from "react";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { Button } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 function ErrorPage() {
     return (
@@ -13,7 +14,7 @@ function ErrorPage() {
                 Page not found
             </Typography>
             <div style={{ marginTop: "30px" }}>
-                <Button variant="contained" href="/">
+                <Button component={RouterLink} to="/" variant="contained">
                     Go Home
                 </Button>
             </div>

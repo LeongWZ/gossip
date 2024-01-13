@@ -42,7 +42,7 @@ function ThreadPreview(props: ThreadPreviewProps) {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">{`${item.comments_count} comments`}</Button>
+                    <Button size="small">{`${item.comments_count + item.replies_count} comments`}</Button>
                 </CardActions>
             </CardActionArea>
         </Card>
