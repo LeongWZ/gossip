@@ -1,8 +1,7 @@
 import { User } from "./types";
 import * as React from "react";
-import { Box, Button, Card, CardContent, Container, IconButton, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 
 const API_ENDPOINT = "/api/v1/replies";
 

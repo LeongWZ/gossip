@@ -14,6 +14,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { Link as RouterLink, useLocation } from "react-router-dom";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const API_ENDPOINT = "/api/v1/comments";
 
@@ -305,7 +307,10 @@ function CommentContent(props: CommentContentProps) {
 
                     {!openReplies && comment.replies_count > 0 && (
                         <Box padding={2}>
-                            <Button onClick={handleClickOpenReplies}>Open {comment.replies_count} replies</Button>
+                            <Button onClick={handleClickOpenReplies}>
+                                <ArrowDropDownIcon sx={{ marginBottom: 0.5 }} />
+                                Open {comment.replies_count} replies
+                            </Button>
                         </Box>
                     )}
 
@@ -328,7 +333,10 @@ function CommentContent(props: CommentContentProps) {
                                 {isRepliesLoading && <p>Loading...</p>}
                             </Box>
                             <Box padding={2}>
-                                <Button onClick={handleClickCloseReplies}>Close {comment.replies_count} replies</Button>
+                                <Button onClick={handleClickCloseReplies}>
+                                    <ArrowDropUpIcon />
+                                    Close {comment.replies_count} replies
+                                </Button>
                             </Box>
                         </>
                     )}
