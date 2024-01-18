@@ -1,4 +1,4 @@
-import { Category, Post } from "./types";
+import { Category, Post } from "../types";
 import * as React from "react";
 import { Button, CardContent, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import Stack from "@mui/material/Stack";
