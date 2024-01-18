@@ -2,7 +2,7 @@ import { Post, Comment, User, Category } from "./types";
 import CreateComment from "./comment/CreateComment";
 import ShowComment from "./comment/ShowComment";
 import ErrorPage from "./ErrorPage";
-import SearchBar from "./SearchBar";
+import SearchBar from "./toolbars/SearchBar";
 import ShowPost from "./post/ShowPost";
 import * as React from "react";
 import { useParams } from "react-router-dom";

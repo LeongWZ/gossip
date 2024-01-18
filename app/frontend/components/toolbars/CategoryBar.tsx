@@ -1,4 +1,4 @@
-import { Category } from "./types";
+import { Category } from "../types";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import * as React from "react";
 
