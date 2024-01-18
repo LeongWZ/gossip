@@ -1,5 +1,5 @@
 import { Category, Post } from "./types";
-import ThreadPreview from "./ThreadPreview";
+import ForumThreadPreview from "./ForumThreadPreview";
 import ForumBanner from "./ForumBanner";
 import SearchBar from "./SearchBar";
 import CategoryBar from "./CategoryBar";
@@ -9,7 +9,6 @@ import * as React from "react";
 type MainProps = {
     categories: Category[];
     posts: Post[];
-    postsLimit: number;
     isPostsLoading: boolean;
     isPostsSortedByTop: boolean;
     postSearchQuery: string;
@@ -24,7 +23,6 @@ function Main(props: MainProps) {
     const {
         categories,
         posts,
-        postsLimit,
         isPostsLoading,
         isPostsSortedByTop,
         postSearchQuery,
@@ -42,7 +40,7 @@ function Main(props: MainProps) {
         ) {
             return;
         }
-        setPostsLimit(postsLimit + 20);
+        setPostsLimit(posts.length + 20);
     };
 
     React.useEffect(() => {
@@ -69,7 +67,7 @@ function Main(props: MainProps) {
             />
 
             {posts.map((post) => (
-                <ThreadPreview item={post} key={post.id} />
+                <ForumThreadPreview post={post} categories={categories} key={post.id} />
             ))}
 
             <div style={{ minHeight: "300px" }}>

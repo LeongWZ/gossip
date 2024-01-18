@@ -3,7 +3,6 @@ import * as React from "react";
 import { Button, Card, CardContent, IconButton, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -15,13 +14,13 @@ const API_ENDPOINT = "/api/v1/comments";
 
 type CreateCommentProps = {
     user: User | undefined;
-    token: string;
+    authToken: string | undefined;
     post_id: number;
     refreshComments: () => void;
 };
 
 function CreateComment(props: CreateCommentProps) {
-    const { user, token, post_id, refreshComments } = props;
+    const { user, authToken, post_id, refreshComments } = props;
 
     const location = useLocation();
 
@@ -39,7 +38,7 @@ function CreateComment(props: CreateCommentProps) {
             headers: {
                 accept: "application/json",
                 "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${authToken}`,
             },
             body: JSON.stringify({
                 comment: {
@@ -106,6 +105,8 @@ function CreateComment(props: CreateCommentProps) {
         </Dialog>
     );
 
+    const [showActionButtons, setShowActionButtons] = React.useState<boolean>(false);
+
     return (
         <Card variant="outlined">
             <CardContent>
@@ -116,24 +117,34 @@ function CreateComment(props: CreateCommentProps) {
                     </>
                 ) : (
                     <form onSubmit={handleCreateSubmit}>
-                        <Typography variant="h6">Create Comment</Typography>
                         <TextField
                             value={body}
                             onChange={(event) => setBody(event.target.value)}
-                            required
+                            onFocus={(event) => setShowActionButtons(true)}
                             fullWidth
                             multiline
-                            minRows={5}
-                            label="Message"
+                            label="Add a comment..."
                             id="body"
                             margin="dense"
                             inputProps={{ maxLength: 5000 }}
+                            variant="standard"
                         />
-                        <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
-                            <Button type="submit" variant="outlined">
-                                Submit
-                            </Button>
-                        </div>
+                        {showActionButtons && (
+                            <Stack direction="row" spacing={2} style={{ float: "right", margin: "10px 5px 10px 0px" }}>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => {
+                                        setBody("");
+                                        setShowActionButtons(false);
+                                    }}
+                                >
+                                    Cancel
+                                </Button>
+                                <Button type="submit" variant="outlined" disabled={body.trim() === ""}>
+                                    Comment
+                                </Button>
+                            </Stack>
+                        )}
                     </form>
                 )}
             </CardContent>

@@ -1,6 +1,7 @@
 import { Reply, User } from "./types";
 import time_ago from "./time_ago";
 import CreateReply from "./CreateReply";
+import EditReply from "./EditReply";
 import * as React from "react";
 import { Button, Card, CardContent, CardActions, IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -11,14 +12,13 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 
 const API_ENDPOINT = "/api/v1/replies";
 
-type ReplyContentProps = {
+type ShowReplyProps = {
     user: User | undefined;
-    token: string;
+    authToken: string | undefined;
     comment_id: number;
     post_id: number;
     reply: Reply;
@@ -26,8 +26,8 @@ type ReplyContentProps = {
     refreshReplies: () => void;
 };
 
-function ReplyContent(props: ReplyContentProps) {
-    const { user, token, comment_id, post_id, reply, refreshComments, refreshReplies } = props;
+function ShowReply(props: ShowReplyProps) {
+    const { user, authToken, comment_id, post_id, reply, refreshComments, refreshReplies } = props;
 
     const location = useLocation();
 
@@ -42,35 +42,6 @@ function ReplyContent(props: ReplyContentProps) {
     const handleClickOpenEdit = () => {
         setEditMode(true);
     };
-
-    const handleClickCloseEdit = () => {
-        setEditMode(false);
-    };
-
-    function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        fetch(`${API_ENDPOINT}/${reply_id}`, {
-            method: "PUT",
-            headers: {
-                accept: "application/json",
-                "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                reply: {
-                    id: reply_id,
-                    body: body,
-                },
-            }),
-        })
-            .then((res) => {
-                setEditMode(false);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }
 
     // DELETE
     const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
@@ -89,7 +60,7 @@ function ReplyContent(props: ReplyContentProps) {
             headers: {
                 accept: "application/json",
                 "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${authToken}`,
             },
             body: JSON.stringify({
                 reply: {
@@ -201,36 +172,12 @@ function ReplyContent(props: ReplyContentProps) {
     return (
         <Card variant="outlined" sx={{ border: 0 }}>
             {editMode ? (
-                <>
-                    <CardContent>
-                        <form onSubmit={handleEditSubmit}>
-                            <Typography variant="h6" gutterBottom>
-                                Edit reply
-                            </Typography>
-                            <TextField
-                                value={body}
-                                onChange={(event) => setBody(event.target.value)}
-                                required
-                                fullWidth
-                                multiline
-                                minRows={5}
-                                label="Message"
-                                id="body"
-                                margin="dense"
-                            />
-                            <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
-                                <Stack direction="row" spacing={2}>
-                                    <Button variant="outlined" onClick={handleClickCloseEdit}>
-                                        Cancel
-                                    </Button>
-                                    <Button type="submit" variant="outlined">
-                                        Save
-                                    </Button>
-                                </Stack>
-                            </div>
-                        </form>
-                    </CardContent>
-                </>
+                <EditReply
+                    authToken={authToken}
+                    reply={reply}
+                    setShowReplyEditMode={setEditMode}
+                    setShowReplyBody={setBody}
+                />
             ) : (
                 <>
                     <CardContent>
@@ -263,7 +210,7 @@ function ReplyContent(props: ReplyContentProps) {
                     {openCreateReply && (
                         <CreateReply
                             user={user}
-                            token={token}
+                            authToken={authToken}
                             comment_id={comment_id}
                             post_id={post_id}
                             recipient_username={reply_username}
@@ -278,4 +225,4 @@ function ReplyContent(props: ReplyContentProps) {
     );
 }
 
-export default ReplyContent;
+export default ShowReply;

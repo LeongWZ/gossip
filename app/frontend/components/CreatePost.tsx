@@ -26,12 +26,12 @@ const API_ENDPOINT = "/api/v1/posts";
 
 type CreatePostProps = {
     user: User | undefined;
-    token: string;
+    authToken: string | undefined;
     categories: Category[];
 };
 
 function CreatePost(props: CreatePostProps) {
-    const { user, token, categories } = props;
+    const { user, authToken, categories } = props;
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -52,7 +52,7 @@ function CreatePost(props: CreatePostProps) {
             headers: {
                 accept: "application/json",
                 "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${authToken}`,
             },
             body: JSON.stringify({
                 post: {

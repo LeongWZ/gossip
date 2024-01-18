@@ -1,21 +1,22 @@
-import { Post } from "./types";
+import { Category, Post } from "./types";
 import styles from "./App.module.css";
 import time_ago from "./time_ago";
 import * as React from "react";
-import { Card, CardContent, CardActionArea, CardActions, Button } from "@mui/material";
+import { Card, CardContent, CardActionArea, CardActions, Button, Chip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
 
-type ThreadPreviewProps = {
-    item: Post;
+type ForumThreadPreviewProps = {
+    post: Post;
+    categories: Category[];
 };
 
-function ThreadPreview(props: ThreadPreviewProps) {
-    const { item } = props;
+function ForumThreadPreview(props: ForumThreadPreviewProps) {
+    const { post, categories } = props;
 
     return (
-        <Card variant="outlined" key={item.id}>
-            <CardActionArea component={RouterLink} to={`/threads/${item.id}`}>
+        <Card variant="outlined" key={post.id}>
+            <CardActionArea component={RouterLink} to={`/threads/${post.id}`}>
                 <CardContent>
                     <Typography
                         variant="h5"
@@ -23,13 +24,16 @@ function ThreadPreview(props: ThreadPreviewProps) {
                         gutterBottom
                         sx={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}
                     >
-                        {item.title}
+                        {post.title}
                     </Typography>
+                    <div style={{ paddingBottom: 10 }}>
+                        <Chip label={categories.find((category) => category.id === post.category_id)?.name} />
+                    </div>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary" gutterBottom>
-                        Posted by {item.username} · {time_ago(item.created_at)}
+                        Posted by {post.username} · {time_ago(post.created_at)}
                     </Typography>
                     <Typography
-                        className={item.body.length > 250 ? styles.fadedown : ""}
+                        className={post.body.length > 250 ? styles.fadedown : ""}
                         variant="body2"
                         sx={{
                             wordBreak: "break-all",
@@ -38,15 +42,15 @@ function ThreadPreview(props: ThreadPreviewProps) {
                             overflow: "hidden",
                         }}
                     >
-                        {item.body}
+                        {post.body}
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">{`${item.comments_count + item.replies_count} comments`}</Button>
+                    <Button size="small">{`${post.comments_count + post.replies_count} comments`}</Button>
                 </CardActions>
             </CardActionArea>
         </Card>
     );
 }
 
-export default ThreadPreview;
+export default ForumThreadPreview;

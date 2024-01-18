@@ -1,36 +1,38 @@
-import { User } from "./types";
+import { Reply } from "./types";
+import time_ago from "./time_ago";
 import * as React from "react";
-import { Box, Button, Stack } from "@mui/material";
+import { Button, Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 
 const API_ENDPOINT = "/api/v1/replies";
 
-type CreateReplyProps = {
-    user: User | undefined;
+type EditReplyProps = {
     authToken: string | undefined;
-    comment_id: number;
-    post_id: number;
-    recipient_username: string;
-    refreshComments: () => void;
-    refreshReplies: () => void;
-    handleClose: () => void;
+    reply: Reply;
+    setShowReplyEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    setShowReplyBody: React.Dispatch<React.SetStateAction<string>>;
 };
 
-function CreateReply(props: CreateReplyProps) {
-    const { user, authToken, comment_id, post_id, recipient_username, refreshComments, refreshReplies, handleClose } =
-        props;
+function EditReply(props: EditReplyProps) {
+    const { authToken, reply, setShowReplyEditMode, setShowReplyBody } = props;
 
-    const [body, setBody] = React.useState<string>(recipient_username === "" ? "" : `@${recipient_username} `);
+    const reply_id = reply.id;
+    const reply_username = reply.username;
+    const [body, setBody] = React.useState<string>(reply.body);
+    const created_time_ago = time_ago(reply.created_at);
 
-    function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
+    // EDIT
+    const handleClickCloseEdit = () => {
+        setShowReplyEditMode(false);
+    };
+
+    function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        if (user === undefined) {
-            return;
-        }
-
-        fetch(API_ENDPOINT, {
-            method: "POST",
+        fetch(`${API_ENDPOINT}/${reply_id}`, {
+            method: "PUT",
             headers: {
                 accept: "application/json",
                 "content-type": "application/json",
@@ -38,18 +40,14 @@ function CreateReply(props: CreateReplyProps) {
             },
             body: JSON.stringify({
                 reply: {
-                    username: user.username,
-                    comment_id: comment_id,
-                    post_id: post_id,
+                    id: reply_id,
                     body: body,
                 },
             }),
         })
             .then((res) => {
-                setBody("");
-                handleClose();
-                refreshComments();
-                refreshReplies();
+                setShowReplyBody(body);
+                setShowReplyEditMode(false);
             })
             .catch((err) => {
                 console.error(err);
@@ -57,8 +55,11 @@ function CreateReply(props: CreateReplyProps) {
     }
 
     return (
-        <Box sx={{ paddingBottom: 5, paddingLeft: 2, paddingRight: 2 }}>
-            <form onSubmit={handleCreateSubmit}>
+        <Box sx={{ paddingTop: 2, paddingBottom: 5, paddingLeft: 2, paddingRight: 2 }}>
+            <Typography sx={{ mb: 1.5 }} color="text.secondary" gutterBottom>
+                {reply_username} · {created_time_ago}
+            </Typography>
+            <form onSubmit={handleEditSubmit}>
                 <TextField
                     value={body}
                     onChange={(event) => setBody(event.target.value)}
@@ -71,18 +72,19 @@ function CreateReply(props: CreateReplyProps) {
                     autoFocus
                     fullWidth
                     multiline
-                    label="Add a reply"
+                    label="Edit reply"
                     id="body"
+                    name="body"
                     margin="dense"
                     inputProps={{ maxLength: 5000 }}
                     variant="standard"
                 />
                 <Stack direction="row" spacing={2} style={{ float: "right", margin: "10px 5px 10px 0px" }}>
-                    <Button variant="outlined" onClick={handleClose}>
+                    <Button variant="outlined" onClick={handleClickCloseEdit}>
                         Cancel
                     </Button>
                     <Button type="submit" variant="outlined" disabled={body.trim() === ""}>
-                        Reply
+                        Save
                     </Button>
                 </Stack>
             </form>
@@ -90,4 +92,4 @@ function CreateReply(props: CreateReplyProps) {
     );
 }
 
-export default CreateReply;
+export default EditReply;

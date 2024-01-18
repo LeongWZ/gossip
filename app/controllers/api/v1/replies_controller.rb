@@ -4,6 +4,7 @@ class Api::V1::RepliesController < ApplicationController
   def index
     @replies = params.has_key?(:comment_id) ? Comment.find(params[:comment_id]).replies : Reply.all
 
+    sort unless not params.has_key?(:sort_by)
     limit unless not params.has_key?(:limit)
 
     render json: @replies
@@ -51,5 +52,16 @@ class Api::V1::RepliesController < ApplicationController
 
   def limit
     @replies = @replies.limit(params[:limit])
+  end
+
+  def sort
+    order_option = case params[:sort_by]
+      when "new"
+        { created_at: :desc }
+      else
+        :created_at
+      end
+
+    @replies = @replies.order(order_option)
   end
 end

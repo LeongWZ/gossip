@@ -33,11 +33,11 @@ function CategoryBar(props: CategoryBarProps) {
                 borderRadius: 1,
             }}
         >
-            <ToggleButton value={0} key={0} sx={{ flexGrow: 1 }}>
+            <ToggleButton value={0} key={0} sx={{ flexGrow: 1, color: "inherit" }}>
                 All
             </ToggleButton>
             {categories.map((category) => (
-                <ToggleButton value={category.id} key={category.id} sx={{ flexGrow: 1 }}>
+                <ToggleButton value={category.id} key={category.id} sx={{ flexGrow: 1, color: "inherit" }}>
                     {category.name}
                 </ToggleButton>
             ))}

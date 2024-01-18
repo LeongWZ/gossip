@@ -39,6 +39,7 @@ class Api::V1::PostsController < ApplicationController
     post = Post.find(post_params[:id])
     post.title = post_params[:title]
     post.body = post_params[:body]
+    post.category_id = post_params[:category_id]
     post.save
 
     render json: {

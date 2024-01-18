@@ -1,7 +1,7 @@
-import { Post, Comment, User } from "./types";
-import PostContent from "./PostContent";
+import { Post, Comment, User, Category } from "./types";
+import ShowPost from "./ShowPost";
 import CreateComment from "./CreateComment";
-import CommentContent from "./CommentContent";
+import ShowComment from "./ShowComment";
 import ErrorPage from "./ErrorPage";
 import SearchBar from "./SearchBar";
 import * as React from "react";
@@ -13,11 +13,12 @@ const API_ENDPOINT = "/api/v1/posts";
 
 type ForumThreadProps = {
     user: User | undefined;
-    token: string;
+    authToken: string | undefined;
+    categories: Category[];
 };
 
 function ForumThread(props: ForumThreadProps) {
-    const { user, token } = props;
+    const { user, authToken, categories } = props;
 
     const params = useParams() as { post_id: string };
     const post_id = parseInt(params.post_id, 10);
@@ -99,7 +100,7 @@ function ForumThread(props: ForumThreadProps) {
         ) {
             return;
         }
-        setCommentsLimit(commentsLimit + 20);
+        setCommentsLimit(comments.length + 20);
     };
 
     React.useEffect(() => {
@@ -117,7 +118,7 @@ function ForumThread(props: ForumThreadProps) {
     return (
         <Container fixed={true}>
             {post ? (
-                <PostContent user={user} token={token} post={post} />
+                <ShowPost user={user} authToken={authToken} post={post} categories={categories} />
             ) : (
                 <Typography variant="body2">Loading... </Typography>
             )}
@@ -126,7 +127,7 @@ function ForumThread(props: ForumThreadProps) {
                 {post ? post.comments_count + post.replies_count : 0} Comments
             </Typography>
 
-            <CreateComment user={user} token={token} post_id={post_id} refreshComments={handleFetchComments} />
+            <CreateComment user={user} authToken={authToken} post_id={post_id} refreshComments={handleFetchComments} />
 
             <SearchBar
                 isSortedByTop={isCommentsSortedByTop}
@@ -136,9 +137,9 @@ function ForumThread(props: ForumThreadProps) {
             />
 
             {comments.map((comment) => (
-                <CommentContent
+                <ShowComment
                     user={user}
-                    token={token}
+                    authToken={authToken}
                     comment={comment}
                     refreshComments={handleFetchComments}
                     key={comment.id}

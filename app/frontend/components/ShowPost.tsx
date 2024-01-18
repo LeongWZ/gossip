@@ -1,8 +1,9 @@
-import { Post, User } from "./types";
+import { Post, User, Category } from "./types";
 import time_ago from "./time_ago";
+import EditPost from "./EditPost";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, CardActions, IconButton } from "@mui/material";
+import { Button, Card, CardContent, CardActions, IconButton, Chip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -10,19 +11,18 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 
 const API_ENDPOINT = "/api/v1/posts";
 
-type PostContentProps = {
+type ShowPostProps = {
     user: User | undefined;
-    token: string;
+    authToken: string | undefined;
     post: Post;
+    categories: Category[];
 };
 
-function PostContent(props: PostContentProps) {
-    const { user, token, post } = props;
+function ShowPost(props: ShowPostProps) {
+    const { user, authToken, post, categories } = props;
 
     const navigate = useNavigate();
 
@@ -30,6 +30,7 @@ function PostContent(props: PostContentProps) {
     const post_username = post.username;
     const [title, setTitle] = React.useState<string>(post.title);
     const [body, setBody] = React.useState<string>(post.body);
+    const [categoryId, setCategoryId] = React.useState<number>(post.category_id);
     const created_time_ago = time_ago(post.created_at);
 
     // EDIT
@@ -38,39 +39,6 @@ function PostContent(props: PostContentProps) {
     const handleClickOpenEdit = () => {
         setEditMode(true);
     };
-
-    const handleClickCloseEdit = () => {
-        setEditMode(false);
-    };
-
-    function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        fetch(`${API_ENDPOINT}/${post_id}`, {
-            method: "PUT",
-            headers: {
-                accept: "application/json",
-                "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                post: {
-                    id: post_id,
-                    title: title,
-                    body: body,
-                },
-            }),
-        })
-            .then((res) => {
-                if (res.status !== 200) {
-                    throw res;
-                }
-                setEditMode(false);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }
 
     // DELETE
     const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
@@ -88,7 +56,7 @@ function PostContent(props: PostContentProps) {
             method: "DELETE",
             headers: {
                 "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${authToken}`,
             },
             body: JSON.stringify({
                 post: {
@@ -110,45 +78,15 @@ function PostContent(props: PostContentProps) {
     return (
         <Card variant="outlined">
             {editMode ? (
-                <>
-                    <CardContent>
-                        <form onSubmit={handleEditSubmit}>
-                            <Typography variant="h5">Edit Post</Typography>
-                            <TextField
-                                value={title}
-                                onChange={(event) => {
-                                    setTitle(event.target.value);
-                                }}
-                                required
-                                fullWidth
-                                label="Post title"
-                                id="title"
-                                margin="normal"
-                            />
-                            <TextField
-                                value={body}
-                                onChange={(event) => setBody(event.target.value)}
-                                required
-                                fullWidth
-                                multiline
-                                minRows={5}
-                                label="Message"
-                                id="body"
-                                margin="dense"
-                            />
-                            <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
-                                <Stack direction="row" spacing={2}>
-                                    <Button variant="outlined" onClick={handleClickCloseEdit}>
-                                        Cancel
-                                    </Button>
-                                    <Button type="submit" variant="outlined">
-                                        Save
-                                    </Button>
-                                </Stack>
-                            </div>
-                        </form>
-                    </CardContent>
-                </>
+                <EditPost
+                    authToken={authToken}
+                    post={post}
+                    categories={categories}
+                    setShowPostEditMode={setEditMode}
+                    setShowPostTitle={setTitle}
+                    setShowPostBody={setBody}
+                    setShowPostCategoryId={setCategoryId}
+                />
             ) : (
                 <>
                     <CardContent>
@@ -156,10 +94,13 @@ function PostContent(props: PostContentProps) {
                             variant="h5"
                             component="div"
                             gutterBottom
-                            sx={{ wordBreak: "break-all", whiteSpace: "pre-wrap" }}
+                            sx={{ wordBreak: "break-all", whiteSpace: "pre-wrap", justifyContent: "" }}
                         >
                             {title}
                         </Typography>
+                        <div style={{ paddingBottom: 10 }}>
+                            <Chip label={categories.find((category) => category.id === categoryId)?.name} />
+                        </div>
                         <Typography sx={{ mb: 1.5 }} color="text.secondary" gutterBottom>
                             Posted by {post_username} · {created_time_ago}
                         </Typography>
@@ -216,4 +157,4 @@ function PostContent(props: PostContentProps) {
     );
 }
 
-export default PostContent;
+export default ShowPost;

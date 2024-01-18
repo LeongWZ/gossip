@@ -1,7 +1,8 @@
 import { Comment, Reply, User } from "./types";
 import time_ago from "./time_ago";
 import CreateReply from "./CreateReply";
-import ReplyContent from "./ReplyContent";
+import ShowReply from "./ShowReply";
+import EditComment from "./EditComment";
 import * as React from "react";
 import { Button, Card, CardContent, CardActions, IconButton, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
@@ -12,22 +13,21 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const API_ENDPOINT = "/api/v1/comments";
 
-type CommentContentProps = {
+type ShowCommentProps = {
     user: User | undefined;
-    token: string;
+    authToken: string | undefined;
     comment: Comment;
     refreshComments: () => void;
 };
 
-function CommentContent(props: CommentContentProps) {
-    const { user, token, comment, refreshComments } = props;
+function ShowComment(props: ShowCommentProps) {
+    const { user, authToken, comment, refreshComments } = props;
 
     const location = useLocation();
 
@@ -37,40 +37,11 @@ function CommentContent(props: CommentContentProps) {
     const created_time_ago = time_ago(comment.created_at);
 
     // EDIT
-    const [editMode, setEditMode] = React.useState(false);
+    const [editMode, setEditMode] = React.useState<boolean>(false);
 
     const handleClickOpenEdit = () => {
         setEditMode(true);
     };
-
-    const handleClickCloseEdit = () => {
-        setEditMode(false);
-    };
-
-    function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        fetch(`${API_ENDPOINT}/${comment_id}`, {
-            method: "PUT",
-            headers: {
-                accept: "application/json",
-                "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-                comment: {
-                    id: comment_id,
-                    body: body,
-                },
-            }),
-        })
-            .then((res) => {
-                setEditMode(false);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }
 
     // DELETE
     const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
@@ -89,7 +60,7 @@ function CommentContent(props: CommentContentProps) {
             headers: {
                 accept: "application/json",
                 "content-type": "application/json",
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${authToken}`,
             },
             body: JSON.stringify({
                 comment: {
@@ -147,7 +118,7 @@ function CommentContent(props: CommentContentProps) {
     const handleFetchReplies = () => {
         setIsRepliesLoading(true);
 
-        fetch(`${API_ENDPOINT}/${comment_id}/replies`)
+        fetch(`${API_ENDPOINT}/${comment_id}/replies/?sort_by=old`)
             .then((res) => {
                 if (res.status !== 200) {
                     throw res;
@@ -233,36 +204,12 @@ function CommentContent(props: CommentContentProps) {
     return (
         <Card variant="outlined">
             {editMode ? (
-                <>
-                    <CardContent>
-                        <form onSubmit={handleEditSubmit}>
-                            <Typography variant="h6" gutterBottom>
-                                Edit comment
-                            </Typography>
-                            <TextField
-                                value={body}
-                                onChange={(event) => setBody(event.target.value)}
-                                required
-                                fullWidth
-                                multiline
-                                minRows={5}
-                                label="Message"
-                                id="body"
-                                margin="dense"
-                            />
-                            <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
-                                <Stack direction="row" spacing={2}>
-                                    <Button variant="outlined" onClick={handleClickCloseEdit}>
-                                        Cancel
-                                    </Button>
-                                    <Button type="submit" variant="outlined">
-                                        Save
-                                    </Button>
-                                </Stack>
-                            </div>
-                        </form>
-                    </CardContent>
-                </>
+                <EditComment
+                    authToken={authToken}
+                    comment={comment}
+                    setShowCommentEditMode={setEditMode}
+                    setShowCommentBody={setBody}
+                />
             ) : (
                 <>
                     <CardContent>
@@ -291,59 +238,59 @@ function CommentContent(props: CommentContentProps) {
                     </CardActions>
 
                     {DeleteDialog}
+                </>
+            )}
 
-                    {openCreateReply && (
-                        <CreateReply
-                            user={user}
-                            token={token}
-                            comment_id={comment_id}
-                            post_id={comment.post_id}
-                            recipient_username=""
-                            refreshComments={refreshComments}
-                            refreshReplies={handleClickOpenReplies}
-                            handleClose={handleCloseCreateReply}
-                        />
-                    )}
+            {openCreateReply && (
+                <CreateReply
+                    user={user}
+                    authToken={authToken}
+                    comment_id={comment_id}
+                    post_id={comment.post_id}
+                    recipient_username=""
+                    refreshComments={refreshComments}
+                    refreshReplies={handleClickOpenReplies}
+                    handleClose={handleCloseCreateReply}
+                />
+            )}
 
-                    {!openReplies && comment.replies_count > 0 && (
-                        <Box padding={2}>
-                            <Button onClick={handleClickOpenReplies}>
-                                <ArrowDropDownIcon sx={{ marginBottom: 0.5 }} />
-                                Open {comment.replies_count} replies
-                            </Button>
-                        </Box>
-                    )}
+            {!openReplies && comment.replies_count > 0 && (
+                <Box padding={2}>
+                    <Button onClick={handleClickOpenReplies}>
+                        <ArrowDropDownIcon sx={{ marginBottom: 0.5 }} />
+                        Open {comment.replies_count} replies
+                    </Button>
+                </Box>
+            )}
 
-                    {openReplies && (
-                        <>
-                            <Box paddingLeft={5}>
-                                {replies.map((reply) => (
-                                    <ReplyContent
-                                        user={user}
-                                        token={token}
-                                        comment_id={comment_id}
-                                        post_id={comment.post_id}
-                                        reply={reply}
-                                        refreshComments={refreshComments}
-                                        refreshReplies={handleClickOpenReplies}
-                                        key={reply.id}
-                                    />
-                                ))}
+            {openReplies && (
+                <>
+                    <Box paddingLeft={5}>
+                        {replies.map((reply) => (
+                            <ShowReply
+                                user={user}
+                                authToken={authToken}
+                                comment_id={comment_id}
+                                post_id={comment.post_id}
+                                reply={reply}
+                                refreshComments={refreshComments}
+                                refreshReplies={handleClickOpenReplies}
+                                key={reply.id}
+                            />
+                        ))}
 
-                                {isRepliesLoading && <p>Loading...</p>}
-                            </Box>
-                            <Box padding={2}>
-                                <Button onClick={handleClickCloseReplies}>
-                                    <ArrowDropUpIcon />
-                                    Close {comment.replies_count} replies
-                                </Button>
-                            </Box>
-                        </>
-                    )}
+                        {isRepliesLoading && <p>Loading...</p>}
+                    </Box>
+                    <Box padding={2}>
+                        <Button onClick={handleClickCloseReplies}>
+                            <ArrowDropUpIcon />
+                            Close {comment.replies_count} replies
+                        </Button>
+                    </Box>
                 </>
             )}
         </Card>
     );
 }
 
-export default CommentContent;
+export default ShowComment;

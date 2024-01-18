@@ -11,11 +11,11 @@ import Container from "@mui/material/Container";
 import { useNavigate, Link as RouterLink, useLocation } from "react-router-dom";
 
 type SignUpProps = {
-    setToken: React.Dispatch<React.SetStateAction<string>>;
+    setAuthToken: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 function SignUp(props: SignUpProps) {
-    const { setToken } = props;
+    const { setAuthToken } = props;
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -47,8 +47,8 @@ function SignUp(props: SignUpProps) {
                 return res.json();
             })
             .then((resJson) => {
-                const { token } = resJson;
-                setToken(token);
+                const { auth_token } = resJson;
+                setAuthToken(auth_token);
                 setShowError(false);
                 navigate(from?.pathname || "/", { replace: true });
             })

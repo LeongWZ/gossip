@@ -2,7 +2,7 @@ class Api::V1::CommentsController < ApplicationController
   skip_before_action :authorized, only: [:index, :show]
 
   def index
-    @comments = params[:post_id] ? Post.find(params[:post_id]).comments : Comment.all
+    @comments = params.has_key?(:post_id) ? Post.find(params[:post_id]).comments : Comment.all
 
     search unless not params.has_key?(:q)
     sort unless not params.has_key?(:sort_by)

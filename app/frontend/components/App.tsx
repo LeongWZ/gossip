@@ -1,5 +1,5 @@
 import { User, Post, Category } from "./types";
-import useStorageState from "./useStorageState";
+import useCookieState from "./useCookieState";
 import Main from "./Main";
 import ForumThread from "./ForumThread";
 import Header from "./Header";
@@ -10,7 +10,7 @@ import LogIn from "./LogIn";
 import AuthComponent from "./AuthComponent";
 import ScrollTop from "./ScrollTop";
 import * as React from "react";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet, ScrollRestoration } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -21,33 +21,34 @@ const API_ENDPOINT = "/api/v1";
 
 function App() {
     // Fetch dark or light Mode
-    const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+    const [prefersDarkMode, setPrefersDarkMode] = React.useState<boolean>(
+        useMediaQuery("(prefers-color-scheme: dark)"),
+    );
 
     const theme = React.useMemo(
         () =>
             createTheme({
                 palette: {
                     mode: prefersDarkMode ? "dark" : "light",
-                    //mode: "light",
                 },
             }),
         [prefersDarkMode],
     );
 
     // Fetch authentication token and user
-    const [token, setToken] = useStorageState("token", "");
+    const [authToken, setAuthToken, removeAuthTokenCookie] = useCookieState("auth_token", undefined);
     const [user, setUser] = React.useState<User | undefined>(undefined);
 
     React.useEffect(() => {
         fetch(`${API_ENDPOINT}/me`, {
             method: "GET",
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${authToken}`,
             },
         })
             .then((res) => (res.status === 200 ? res.json() : undefined))
             .then((user) => setUser(user));
-    }, [token]);
+    }, [authToken]);
 
     // Fetch categories
     const [categories, setCategories] = React.useState<Category[]>([]);
@@ -126,7 +127,12 @@ function App() {
         {
             element: (
                 <>
-                    <Header user={user} setToken={setToken} />
+                    <Header
+                        user={user}
+                        prefersDarkMode={prefersDarkMode}
+                        removeAuthTokenCookie={removeAuthTokenCookie}
+                        setPrefersDarkMode={setPrefersDarkMode}
+                    />
                     <div id="back-to-top-anchor" />
                     <Outlet />
                     {/*
@@ -138,6 +144,7 @@ function App() {
                             <KeyboardArrowUpIcon />
                         </Fab>
                     </ScrollTop>
+                    <ScrollRestoration />
                 </>
             ),
             children: [
@@ -147,7 +154,6 @@ function App() {
                         <Main
                             categories={categories}
                             posts={posts}
-                            postsLimit={postsLimit}
                             isPostsLoading={isPostsLoading}
                             isPostsSortedByTop={isPostsSortedByTop}
                             postSearchQuery={postSearchQuery}
@@ -161,17 +167,17 @@ function App() {
                 },
                 {
                     path: "/threads/:post_id",
-                    element: <ForumThread user={user} token={token} />,
+                    element: <ForumThread user={user} authToken={authToken} categories={categories} />,
                 },
                 {
                     path: "/create",
-                    element: <CreatePost user={user} token={token} categories={categories} />,
+                    element: <CreatePost user={user} authToken={authToken} categories={categories} />,
                 },
                 {
                     path: "/signup",
                     element: (
                         <AuthComponent user={user}>
-                            <SignUp setToken={setToken} />
+                            <SignUp setAuthToken={setAuthToken} />
                         </AuthComponent>
                     ),
                 },
@@ -179,7 +185,7 @@ function App() {
                     path: "/login",
                     element: (
                         <AuthComponent user={user}>
-                            <LogIn setToken={setToken} />
+                            <LogIn setAuthToken={setAuthToken} />
                         </AuthComponent>
                     ),
                 },
