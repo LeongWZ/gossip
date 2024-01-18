@@ -1,8 +1,8 @@
-import { Category, Post } from "./types";
 import ForumThreadPreview from "./ForumThreadPreview";
 import ForumBanner from "./ForumBanner";
-import SearchBar from "./SearchBar";
 import CategoryBar from "./CategoryBar";
+import SearchBar from "./SearchBar";
+import { Category, Post } from "./types";
 import { Container } from "@mui/material";
 import * as React from "react";
 

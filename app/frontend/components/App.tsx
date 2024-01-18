@@ -1,13 +1,13 @@
 import { User, Post, Category } from "./types";
-import useCookieState from "./useCookieState";
+import useCookieState from "./hooks/useCookieState";
 import Main from "./Main";
 import ForumThread from "./ForumThread";
 import Header from "./Header";
-import CreatePost from "./CreatePost";
+import CreatePost from "./post/CreatePost";
 import ErrorPage from "./ErrorPage";
-import SignUp from "./SignUp";
-import LogIn from "./LogIn";
-import AuthComponent from "./AuthComponent";
+import SignUp from "./auth/SignUp";
+import LogIn from "./auth/LogIn";
+import AuthComponent from "./auth/AuthComponent";
 import ScrollTop from "./ScrollTop";
 import * as React from "react";
 import { createBrowserRouter, RouterProvider, Outlet, ScrollRestoration } from "react-router-dom";

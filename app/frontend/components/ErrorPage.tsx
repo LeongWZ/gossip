@@ -14,7 +14,7 @@ function ErrorPage() {
                 Page not found
             </Typography>
             <div style={{ marginTop: "30px" }}>
-                <Button component={RouterLink} to="/" variant="contained">
+                <Button component={RouterLink} reloadDocument to="/" variant="contained">
                     Go Home
                 </Button>
             </div>

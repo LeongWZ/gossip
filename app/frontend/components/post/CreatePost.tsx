@@ -1,4 +1,4 @@
-import { User, Category } from "./types";
+import { User, Category } from "../types";
 import * as React from "react";
 import { useNavigate, Link as RouterLink, useLocation } from "react-router-dom";
 import {

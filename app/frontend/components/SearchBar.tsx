@@ -82,7 +82,7 @@ function SearchBar(props: SearchBarProps) {
     };
 
     return (
-        <Paper>
+        <Paper elevation={0}>
             <Toolbar
                 sx={{
                     justifyContent: "space-between",

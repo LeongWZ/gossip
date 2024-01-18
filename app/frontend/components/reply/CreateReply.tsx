@@ -1,4 +1,4 @@
-import { User } from "./types";
+import { User } from "../types";
 import * as React from "react";
 import { Box, Button, Stack } from "@mui/material";
 import TextField from "@mui/material/TextField";

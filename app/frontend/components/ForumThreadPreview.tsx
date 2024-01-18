@@ -1,5 +1,5 @@
-import { Category, Post } from "./types";
 import styles from "./App.module.css";
+import { Category, Post } from "./types";
 import time_ago from "./time_ago";
 import * as React from "react";
 import { Card, CardContent, CardActionArea, CardActions, Button, Chip } from "@mui/material";

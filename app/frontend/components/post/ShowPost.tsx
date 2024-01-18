@@ -1,6 +1,6 @@
-import { Post, User, Category } from "./types";
-import time_ago from "./time_ago";
 import EditPost from "./EditPost";
+import { Post, User, Category } from "../types";
+import time_ago from "../time_ago";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, CardActions, IconButton, Chip } from "@mui/material";

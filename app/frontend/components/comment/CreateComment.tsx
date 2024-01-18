@@ -1,4 +1,4 @@
-import { User } from "./types";
+import { User } from "../types";
 import * as React from "react";
 import { Button, Card, CardContent, IconButton, Stack } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";

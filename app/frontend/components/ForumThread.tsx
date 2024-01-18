@@ -1,9 +1,9 @@
 import { Post, Comment, User, Category } from "./types";
-import ShowPost from "./ShowPost";
-import CreateComment from "./CreateComment";
-import ShowComment from "./ShowComment";
+import CreateComment from "./comment/CreateComment";
+import ShowComment from "./comment/ShowComment";
 import ErrorPage from "./ErrorPage";
 import SearchBar from "./SearchBar";
+import ShowPost from "./post/ShowPost";
 import * as React from "react";
 import { useParams } from "react-router-dom";
 import Container from "@mui/material/Container";

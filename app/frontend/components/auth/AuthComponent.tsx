@@ -1,4 +1,4 @@
-import { User } from "./types";
+import { User } from "../types";
 import * as React from "react";
 import { Navigate } from "react-router-dom";
 

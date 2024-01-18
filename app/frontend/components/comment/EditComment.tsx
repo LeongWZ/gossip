@@ -1,5 +1,5 @@
-import { Comment } from "./types";
-import time_ago from "./time_ago";
+import { Comment } from "../types";
+import time_ago from "../time_ago";
 import * as React from "react";
 import { Button, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
