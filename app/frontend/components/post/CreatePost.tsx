@@ -56,7 +56,7 @@ function CreatePost(props: CreatePostProps) {
             },
             body: JSON.stringify({
                 post: {
-                    username: user.username,
+                    user_id: user.id,
                     title: title,
                     body: body,
                     category_id: categoryId,

@@ -8,22 +8,26 @@ class Api::V1::PostsController < ApplicationController
     sort unless not params.has_key?(:sort_by)
     limit unless not params.has_key?(:limit)
 
-    render json: @posts
+    render json: @posts.map{
+      |post| post.as_json.merge!({ username: post.user.username})
+    }
   end
 
   def show
-    render json: Post.find(params[:id])
+    post = Post.find(params[:id])
+
+    render json: post.as_json.merge!({ username: post.user.username})
   end
 
   def create
     post = Post.create(
-      username: post_params[:username],
+      user_id: post_params[:user_id],
       title: post_params[:title],
       body: post_params[:body],
       category_id: post_params[:category_id]
     )
 
-    render json: post, status: :created
+    render json: post.as_json.merge!({ username: post.user.username}), status: :created
   end
 
   def destroy
@@ -50,7 +54,7 @@ class Api::V1::PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:id, :username, :title, :body, :category_id)
+    params.require(:post).permit(:id, :user_id, :title, :body, :category_id)
   end
 
   def search

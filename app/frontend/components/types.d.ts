@@ -1,6 +1,7 @@
 export type Post = {
     id: number;
     username: string;
+    user_id: number;
     title: string;
     body: string;
     category_id: number;
@@ -33,6 +34,7 @@ export type User = {
     username: string;
     created_at: string;
     updated_at: string;
+    posts_count: number;
 };
 
 export type Category = {

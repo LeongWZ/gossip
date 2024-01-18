@@ -9,6 +9,7 @@ function useCookieState(
 
     React.useEffect(() => {
         if (value !== undefined) {
+            // Cookie set to expire in 7 days from login
             Cookies.set(key, value, { expires: 7, sameSite: "strict" });
         }
     }, [key, value]);
