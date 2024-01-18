@@ -42,7 +42,7 @@ function CreateComment(props: CreateCommentProps) {
             },
             body: JSON.stringify({
                 comment: {
-                    username: user.username,
+                    user_id: user.id,
                     post_id: post_id,
                     body: body,
                 },

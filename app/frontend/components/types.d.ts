@@ -14,6 +14,7 @@ export type Post = {
 export type Comment = {
     id: number;
     username: string;
+    user_id: number;
     post_id: number;
     body: string;
     created_at: string;
@@ -24,6 +25,9 @@ export type Comment = {
 export type Reply = {
     id: number;
     username: string;
+    user_id: number;
+    comment_id: number;
+    post_id: number;
     body: string;
     created_at: string;
     updated_at: string;
@@ -35,6 +39,8 @@ export type User = {
     created_at: string;
     updated_at: string;
     posts_count: number;
+    comments_count: number;
+    replies_count: number;
 };
 
 export type Category = {

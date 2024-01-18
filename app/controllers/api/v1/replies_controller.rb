@@ -7,22 +7,26 @@ class Api::V1::RepliesController < ApplicationController
     sort unless not params.has_key?(:sort_by)
     limit unless not params.has_key?(:limit)
 
-    render json: @replies
+    render json: @replies.map{
+      |reply| reply.as_json.merge!({ username: reply.user.username})
+    }
   end
 
   def show
-    render json: Reply.find(params[:id])
+    reply = Reply.find(params[:id])
+
+    render json: reply.as_json.merge!({ username: reply.user.username})
   end
 
   def create
     reply = Reply.create(
-      username: reply_params[:username],
+      user_id: reply_params[:user_id],
       comment_id: reply_params[:comment_id],
       post_id: reply_params[:post_id],
       body: reply_params[:body]
     )
 
-    render json: reply, status: :created
+    render json: reply.as_json.merge!({ username: reply.user.username}), status: :created
   end
 
   def destroy
@@ -47,7 +51,7 @@ class Api::V1::RepliesController < ApplicationController
   private
 
   def reply_params
-    params.require(:reply).permit(:id, :username, :body, :comment_id, :post_id)
+    params.require(:reply).permit(:id, :user_id, :body, :comment_id, :post_id)
   end
 
   def limit

@@ -38,7 +38,7 @@ function CreateReply(props: CreateReplyProps) {
             },
             body: JSON.stringify({
                 reply: {
-                    username: user.username,
+                    user_id: user.id,
                     comment_id: comment_id,
                     post_id: post_id,
                     body: body,

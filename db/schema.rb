@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_18_170803) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_18_180250) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,8 +27,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_18_170803) do
     t.datetime "updated_at", null: false
     t.bigint "post_id"
     t.integer "replies_count", default: 0
-    t.string "username"
+    t.bigint "user_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -39,25 +40,30 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_18_170803) do
     t.integer "comments_count", default: 0
     t.bigint "category_id"
     t.integer "replies_count", default: 0
-    t.string "username"
+    t.bigint "user_id"
     t.index ["category_id"], name: "index_posts_on_category_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "replies", force: :cascade do |t|
-    t.string "username"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "comment_id"
     t.bigint "post_id"
+    t.bigint "user_id"
     t.index ["comment_id"], name: "index_replies_on_comment_id"
     t.index ["post_id"], name: "index_replies_on_post_id"
+    t.index ["user_id"], name: "index_replies_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username", limit: 38
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "posts_count", default: 0
+    t.integer "comments_count", default: 0
+    t.integer "replies_count", default: 0
   end
 
 end

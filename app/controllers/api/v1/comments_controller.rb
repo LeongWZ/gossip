@@ -8,21 +8,24 @@ class Api::V1::CommentsController < ApplicationController
     sort unless not params.has_key?(:sort_by)
     limit unless not params.has_key?(:limit)
 
-    render json: @comments
+    render json: @comments.map{
+      |comment| comment.as_json.merge!({ username: comment.user.username })
+    }
   end
 
   def show
-    render json: Comment.find(params[:id])
+    comment = Comment.find(params[:id])
+    render json: comment.as_json.merge!({ username: comment.user.username })
   end
 
   def create
     comment = Comment.create(
-      username: comment_params[:username],
+      user_id: comment_params[:user_id],
       post_id: comment_params[:post_id],
       body: comment_params[:body]
     )
 
-    render json: comment, status: :created
+    render json: comment.as_json.merge!({ username: comment.user.username }), status: :created
   end
 
   def destroy
@@ -47,7 +50,7 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:id, :username, :body, :post_id)
+    params.require(:comment).permit(:id, :user_id, :body, :post_id)
   end
 
   def search
