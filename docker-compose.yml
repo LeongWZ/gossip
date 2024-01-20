@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  rails:
+    build: .
+    depends_on:
+      - vite
+      - postgres
+    entrypoint: ./docker-rails.sh
+    environment:
+      RAILS_ENV: development
+      VITE_RUBY_HOST: vite
+      DB_HOST: postgres
+      DB_USERNAME: admin
+      DB_PASSWORD: admin
+      API_KEY: "secretkey"
+    ports:
+      - "3000:3000"
+  vite:
+    build: .
+    entrypoint: ./docker-vite.sh
+    environment:
+      DEBUG: '*vite*'
+      RAILS_ENV: development
+      VITE_RUBY_HOST: 0.0.0.0
+    ports:
+      - "3036:3036"
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: gossip_development
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
