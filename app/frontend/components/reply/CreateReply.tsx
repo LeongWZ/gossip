@@ -1,7 +1,7 @@
 import { User } from "../types";
+import CommentForm from "../forms/CommentForm";
 import * as React from "react";
-import { Box, Button, Stack } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { Box } from "@mui/material";
 
 const API_ENDPOINT = "/api/v1/replies";
 
@@ -20,14 +20,15 @@ function CreateReply(props: CreateReplyProps) {
     const { user, authToken, comment_id, post_id, recipient_username, refreshComments, refreshReplies, handleClose } =
         props;
 
-    const [body, setBody] = React.useState<string>(recipient_username === "" ? "" : `@${recipient_username} `);
-
     function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         if (user === undefined) {
             return;
         }
+
+        const data = new FormData(event.currentTarget);
+        const body = data.get("body") as string;
 
         fetch(API_ENDPOINT, {
             method: "POST",
@@ -46,7 +47,6 @@ function CreateReply(props: CreateReplyProps) {
             }),
         })
             .then((res) => {
-                setBody("");
                 handleClose();
                 refreshComments();
                 refreshReplies();
@@ -58,34 +58,14 @@ function CreateReply(props: CreateReplyProps) {
 
     return (
         <Box sx={{ paddingBottom: 5, paddingLeft: 2, paddingRight: 2 }}>
-            <form onSubmit={handleCreateSubmit}>
-                <TextField
-                    value={body}
-                    onChange={(event) => setBody(event.target.value)}
-                    onFocus={(event) =>
-                        event.currentTarget.setSelectionRange(
-                            event.currentTarget.value.length,
-                            event.currentTarget.value.length,
-                        )
-                    }
-                    autoFocus
-                    fullWidth
-                    multiline
-                    label="Add a reply"
-                    id="body"
-                    margin="dense"
-                    inputProps={{ maxLength: 5000 }}
-                    variant="standard"
-                />
-                <Stack direction="row" spacing={2} style={{ float: "right", margin: "10px 5px 10px 0px" }}>
-                    <Button variant="outlined" onClick={handleClose}>
-                        Cancel
-                    </Button>
-                    <Button type="submit" variant="outlined" disabled={body.trim() === ""}>
-                        Reply
-                    </Button>
-                </Stack>
-            </form>
+            <CommentForm
+                label="Add a reply"
+                submitButtonLabel="Reply"
+                autoFocus={true}
+                defaultCommentBody={recipient_username === "" ? "" : `@${recipient_username} `}
+                handleFormSubmit={handleCreateSubmit}
+                handleFormCancel={handleClose}
+            />
         </Box>
     );
 }

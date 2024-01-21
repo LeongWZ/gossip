@@ -1,9 +1,9 @@
 import { Post, Comment, User, Category } from "./types";
-import CreateComment from "./comment/CreateComment";
-import ShowComment from "./comment/ShowComment";
-import ErrorPage from "./ErrorPage";
+import ErrorPage from "./Error";
 import SearchBar from "./toolbars/SearchBar";
-import ShowPost from "./post/ShowPost";
+import PostContent from "./post/PostContent";
+import CommentContent from "./comment/CommentContent";
+import CreateComment from "./comment/CreateComment";
 import * as React from "react";
 import { useParams } from "react-router-dom";
 import Container from "@mui/material/Container";
@@ -11,13 +11,13 @@ import Typography from "@mui/material/Typography";
 
 const API_ENDPOINT = "/api/v1/posts";
 
-type ForumThreadProps = {
+type ThreadProps = {
     user: User | undefined;
     authToken: string | undefined;
     categories: Category[];
 };
 
-function ForumThread(props: ForumThreadProps) {
+function Thread(props: ThreadProps) {
     const { user, authToken, categories } = props;
 
     const params = useParams() as { post_id: string };
@@ -118,7 +118,7 @@ function ForumThread(props: ForumThreadProps) {
     return (
         <Container fixed={true}>
             {post ? (
-                <ShowPost user={user} authToken={authToken} post={post} categories={categories} />
+                <PostContent user={user} authToken={authToken} post={post} categories={categories} />
             ) : (
                 <Typography variant="body2">Loading... </Typography>
             )}
@@ -137,7 +137,7 @@ function ForumThread(props: ForumThreadProps) {
             />
 
             {comments.map((comment) => (
-                <ShowComment
+                <CommentContent
                     user={user}
                     authToken={authToken}
                     comment={comment}
@@ -155,4 +155,4 @@ function ForumThread(props: ForumThreadProps) {
     );
 }
 
-export default ForumThread;
+export default Thread;

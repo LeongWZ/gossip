@@ -1,22 +1,16 @@
 import CreateReply from "./CreateReply";
 import EditReply from "./EditReply";
 import { Reply, User } from "../types";
-import time_ago from "../time_ago";
+import time_ago from "../../helper/time_ago";
+import DeleteDialog from "../dialogs/DeleteDialog";
+import LogInSignUpDialog from "../dialogs/LogInSignUpDialog";
 import * as React from "react";
-import { Button, Card, CardContent, CardActions, IconButton } from "@mui/material";
+import { Button, Card, CardContent, CardActions } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import CloseIcon from "@mui/icons-material/Close";
-import Stack from "@mui/material/Stack";
-import { Link as RouterLink, useLocation } from "react-router-dom";
 
 const API_ENDPOINT = "/api/v1/replies";
 
-type ShowReplyProps = {
+type ReplyContentProps = {
     user: User | undefined;
     authToken: string | undefined;
     comment_id: number;
@@ -26,10 +20,8 @@ type ShowReplyProps = {
     refreshReplies: () => void;
 };
 
-function ShowReply(props: ShowReplyProps) {
+function ReplyContent(props: ReplyContentProps) {
     const { user, authToken, comment_id, post_id, reply, refreshComments, refreshReplies } = props;
-
-    const location = useLocation();
 
     const reply_id = reply.id;
     const reply_username = reply.username;
@@ -78,39 +70,6 @@ function ShowReply(props: ShowReplyProps) {
             });
     }
 
-    const DeleteDialog = (
-        <Dialog open={openDeleteDialog} onClose={handleClickOpenDeleteDialog} fullWidth={true}>
-            <DialogTitle
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: 1,
-                    paddingBottom: 1,
-                    borderBottom: 1,
-                    borderColor: "divider",
-                }}
-            >
-                Delete reply
-                <IconButton onClick={handleCloseDeleteDialog} size="small" sx={{ paddingTop: "0px" }}>
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText sx={{ paddingTop: "20px" }}>
-                    Are you sure you want to delete your reply?
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                <Button variant="outlined" onClick={handleCloseDeleteDialog}>
-                    Keep
-                </Button>
-                <Button variant="outlined" color="error" onClick={handleClickDeleteReply} autoFocus>
-                    Delete
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
-
     const [openCreateReply, setOpenCreateReply] = React.useState<boolean>(false);
 
     const handleClickReply = () => {
@@ -130,44 +89,6 @@ function ShowReply(props: ShowReplyProps) {
     const handleCloseLogInDialog = () => {
         setOpenLogInSignUpDialog(false);
     };
-
-    const LogInSignUpDialog = (
-        <Dialog open={openLogInSignUpDialog} fullWidth>
-            <DialogTitle
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: 1,
-                    paddingBottom: 1,
-                    borderBottom: 1,
-                    borderColor: "divider",
-                }}
-            >
-                Log in / Sign up to reply
-                <IconButton onClick={handleCloseLogInDialog} size="small" sx={{ paddingTop: "0px" }}>
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText sx={{ paddingTop: 3, paddingBottom: 2 }}>
-                    You must log in to an account before you can reply
-                </DialogContentText>
-                <Stack direction="row" spacing={2}>
-                    <Button component={RouterLink} to="/login" replace state={{ from: location }}>
-                        Log in
-                    </Button>
-                    <Button component={RouterLink} to="/signup" replace state={{ from: location }}>
-                        Sign up
-                    </Button>
-                </Stack>
-            </DialogContent>
-            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                <Button onClick={handleCloseLogInDialog} variant="outlined">
-                    Cancel
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
 
     return (
         <Card variant="outlined" sx={{ border: 0 }}>
@@ -202,10 +123,17 @@ function ShowReply(props: ShowReplyProps) {
                         <Button size="small" onClick={handleClickReply}>
                             Reply
                         </Button>
-                        {LogInSignUpDialog}
+
+                        <LogInSignUpDialog open={openLogInSignUpDialog} handleCloseDialog={handleCloseLogInDialog} />
                     </CardActions>
 
-                    {DeleteDialog}
+                    <DeleteDialog
+                        open={openDeleteDialog}
+                        title="Delete reply"
+                        body="Are you sure you want to delete your reply?"
+                        handleCloseDialog={handleCloseDeleteDialog}
+                        handleClickDelete={handleClickDeleteReply}
+                    />
 
                     {openCreateReply && (
                         <CreateReply
@@ -225,4 +153,4 @@ function ShowReply(props: ShowReplyProps) {
     );
 }
 
-export default ShowReply;
+export default ReplyContent;

@@ -59,10 +59,10 @@ class Api::V1::PostsController < ApplicationController
 
   def search
     @posts = @posts.where(
-      "title ILIKE ? or body ILIKE ? or username ILIKE ?",
+      "title ILIKE ? or body ILIKE ? or user_id IN (?)",
       "%#{params[:q]}%",
       "%#{params[:q]}%",
-      "%#{params[:q]}%"
+      User.where("username ILIKE ?", "%#{params[:q]}%").map{|user| user.id}
     )
   end
 

@@ -1,35 +1,27 @@
 import EditComment from "./EditComment";
 import { Comment, Reply, User } from "../types";
-import time_ago from "../time_ago";
+import time_ago from "../../helper/time_ago";
 import CreateReply from "../reply/CreateReply";
-import ShowReply from "../reply/ShowReply";
+import ReplyContent from "../reply/ReplyContent";
+import DeleteDialog from "../dialogs/DeleteDialog";
+import LogInSignUpDialog from "../dialogs/LogInSignUpDialog";
 import * as React from "react";
-import { Button, Card, CardContent, CardActions, IconButton, Box } from "@mui/material";
+import { Button, Card, CardContent, CardActions, Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import CloseIcon from "@mui/icons-material/Close";
-import Stack from "@mui/material/Stack";
-import { Link as RouterLink, useLocation } from "react-router-dom";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const API_ENDPOINT = "/api/v1/comments";
 
-type ShowCommentProps = {
+type CommentContentProps = {
     user: User | undefined;
     authToken: string | undefined;
     comment: Comment;
     refreshComments: () => void;
 };
 
-function ShowComment(props: ShowCommentProps) {
+function CommentContent(props: CommentContentProps) {
     const { user, authToken, comment, refreshComments } = props;
-
-    const location = useLocation();
 
     const comment_id = comment.id;
     const comment_username = comment.username;
@@ -76,39 +68,6 @@ function ShowComment(props: ShowCommentProps) {
                 console.error(err);
             });
     }
-
-    const DeleteDialog = (
-        <Dialog open={openDeleteDialog} onClose={handleClickOpenDeleteDialog} fullWidth={true}>
-            <DialogTitle
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: 1,
-                    paddingBottom: 1,
-                    borderBottom: 1,
-                    borderColor: "divider",
-                }}
-            >
-                Delete comment
-                <IconButton onClick={handleCloseDeleteDialog} size="small" sx={{ paddingTop: "0px" }}>
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText sx={{ paddingTop: "20px" }}>
-                    Are you sure you want to delete your comment?
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                <Button variant="outlined" onClick={handleCloseDeleteDialog}>
-                    Keep
-                </Button>
-                <Button variant="outlined" color="error" onClick={handleClickDeleteComment} autoFocus>
-                    Delete
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
 
     const [replies, setReplies] = React.useState<Reply[]>([]);
     const [openReplies, setOpenReplies] = React.useState<boolean>(false);
@@ -163,44 +122,6 @@ function ShowComment(props: ShowCommentProps) {
         setOpenLogInSignUpDialog(false);
     };
 
-    const LogInSignUpDialog = (
-        <Dialog open={openLogInSignUpDialog} fullWidth>
-            <DialogTitle
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: 1,
-                    paddingBottom: 1,
-                    borderBottom: 1,
-                    borderColor: "divider",
-                }}
-            >
-                Log in / Sign up to reply
-                <IconButton onClick={handleCloseLogInDialog} size="small" sx={{ paddingTop: "0px" }}>
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText sx={{ paddingTop: 3, paddingBottom: 2 }}>
-                    You must log in to an account before you can reply
-                </DialogContentText>
-                <Stack direction="row" spacing={2}>
-                    <Button component={RouterLink} to="/login" replace state={{ from: location }}>
-                        Log in
-                    </Button>
-                    <Button component={RouterLink} to="/signup" replace state={{ from: location }}>
-                        Sign up
-                    </Button>
-                </Stack>
-            </DialogContent>
-            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                <Button onClick={handleCloseLogInDialog} variant="outlined">
-                    Cancel
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
-
     return (
         <Card variant="outlined">
             {editMode ? (
@@ -234,10 +155,17 @@ function ShowComment(props: ShowCommentProps) {
                         <Button size="small" onClick={handleClickReply}>
                             Reply
                         </Button>
-                        {LogInSignUpDialog}
+
+                        <LogInSignUpDialog open={openLogInSignUpDialog} handleCloseDialog={handleCloseLogInDialog} />
                     </CardActions>
 
-                    {DeleteDialog}
+                    <DeleteDialog
+                        open={openDeleteDialog}
+                        title="Delete comment"
+                        body="Are you sure you want to delete your comment?"
+                        handleCloseDialog={handleCloseDeleteDialog}
+                        handleClickDelete={handleClickDeleteComment}
+                    />
                 </>
             )}
 
@@ -267,7 +195,7 @@ function ShowComment(props: ShowCommentProps) {
                 <>
                     <Box paddingLeft={5}>
                         {replies.map((reply) => (
-                            <ShowReply
+                            <ReplyContent
                                 user={user}
                                 authToken={authToken}
                                 comment_id={comment_id}
@@ -293,4 +221,4 @@ function ShowComment(props: ShowCommentProps) {
     );
 }
 
-export default ShowComment;
+export default CommentContent;

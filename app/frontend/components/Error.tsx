@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import { Button } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 
-function ErrorPage() {
+function Error() {
     return (
         <Container sx={{ mt: 8, mb: 2 }} maxWidth="sm">
             <Typography variant="h2" component="h1" gutterBottom>
@@ -22,4 +22,4 @@ function ErrorPage() {
     );
 }
 
-export default ErrorPage;
+export default Error;

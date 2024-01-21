@@ -7,7 +7,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import Box from "@mui/material/Box";
 import { Link as RouterLink } from "react-router-dom";
 
-function ForumBanner() {
+function Banner() {
     return (
         <Paper
             sx={{
@@ -54,4 +54,4 @@ function ForumBanner() {
     );
 }
 
-export default ForumBanner;
+export default Banner;

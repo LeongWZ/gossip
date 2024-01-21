@@ -55,9 +55,9 @@ class Api::V1::CommentsController < ApplicationController
 
   def search
     @comments = @comments.where(
-      "body ILIKE ? or username ILIKE ?",
+      "body ILIKE ? or user_id IN (?)",
       "%#{params[:q]}%",
-      "%#{params[:q]}%"
+      User.where("username ILIKE ?", "%#{params[:q]}%").map{|user| user.id}
     )
   end
 

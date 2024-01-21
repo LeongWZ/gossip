@@ -1,17 +1,12 @@
 import { User } from "./types";
+import LogOutDialog from "./dialogs/LogOutDialog";
 import * as React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Stack, IconButton, Switch, FormControlLabel, Menu, MenuItem } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import CloseIcon from "@mui/icons-material/Close";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 type HeaderMenuProps = {
     prefersDarkMode: boolean;
@@ -22,8 +17,19 @@ type HeaderMenuProps = {
 function HeaderMenu(props: HeaderMenuProps) {
     const { prefersDarkMode, removeAuthTokenCookie, setPrefersDarkMode } = props;
 
-    const navigate = useNavigate();
+    // Toggle Dark Mode
+    const handleClickControlDarkMode = () => {
+        setPrefersDarkMode(!prefersDarkMode);
+    };
 
+    // Handle Log Out
+    const [openLogOutDialog, setOpenLogOutDialog] = React.useState<boolean>(false);
+
+    const handleClickOpenLogOutDialog = () => {
+        setOpenLogOutDialog(true);
+    };
+
+    // For go to Top button
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -31,58 +37,6 @@ function HeaderMenu(props: HeaderMenuProps) {
     };
     const handleClose = () => {
         setAnchorEl(null);
-    };
-
-    const [openLogOutDialog, setOpenLogOutDialog] = React.useState<boolean>(false);
-
-    const handleClickOpenLogOutDialog = () => {
-        setOpenLogOutDialog(true);
-    };
-
-    const handleCloseLogOutDialog = () => {
-        setOpenLogOutDialog(false);
-    };
-
-    function handleClickLogOut() {
-        removeAuthTokenCookie();
-        handleCloseLogOutDialog();
-        navigate("/");
-        navigate(0);
-    }
-
-    const LogOutDialog = (
-        <Dialog open={openLogOutDialog} fullWidth>
-            <DialogTitle
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: 1,
-                    paddingBottom: 1,
-                    borderBottom: 1,
-                    borderColor: "divider",
-                }}
-            >
-                Log out
-                <IconButton onClick={handleCloseLogOutDialog} size="small" sx={{ paddingTop: "0px" }}>
-                    <CloseIcon />
-                </IconButton>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText sx={{ paddingTop: "20px" }}>Are you sure you want to log out?</DialogContentText>
-            </DialogContent>
-            <DialogActions sx={{ paddingRight: 2, paddingBottom: 2 }}>
-                <Button variant="outlined" onClick={handleCloseLogOutDialog}>
-                    Cancel
-                </Button>
-                <Button variant="outlined" onClick={handleClickLogOut} color="error" autoFocus>
-                    Log out
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
-
-    const handleClickControlDarkMode = () => {
-        setPrefersDarkMode(!prefersDarkMode);
     };
 
     return (
@@ -114,7 +68,12 @@ function HeaderMenu(props: HeaderMenuProps) {
                 </MenuItem>
                 <MenuItem onClick={handleClickOpenLogOutDialog}>Log out</MenuItem>
             </Menu>
-            {LogOutDialog}
+
+            <LogOutDialog
+                open={openLogOutDialog}
+                handleCloseDialog={() => setOpenLogOutDialog(false)}
+                removeAuthTokenCookie={removeAuthTokenCookie}
+            />
         </div>
     );
 }

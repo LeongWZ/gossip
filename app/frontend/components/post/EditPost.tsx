@@ -1,8 +1,7 @@
 import { Category, Post } from "../types";
+import PostForm from "../forms/PostForm";
 import * as React from "react";
-import { Button, CardContent, FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
+import { CardContent } from "@mui/material";
 
 const API_ENDPOINT = "/api/v1/posts";
 
@@ -27,21 +26,15 @@ function EditPost(props: EditPostProps) {
         setShowPostCategoryId,
     } = props;
 
-    const post_id = post.id;
-    const [title, setTitle] = React.useState<string>(post.title);
-    const [categoryId, setCategoryId] = React.useState<number>(post.category_id);
-    const [body, setBody] = React.useState<string>(post.body);
-
-    // EDIT
-
-    const handleClickCloseEdit = () => {
-        setShowPostEditMode(false);
-    };
-
     function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        fetch(`${API_ENDPOINT}/${post_id}`, {
+        const data = new FormData(event.currentTarget);
+        const title = data.get("title") as string;
+        const body = data.get("body") as string;
+        const category_id = parseInt(data.get("category_id") as string);
+
+        fetch(`${API_ENDPOINT}/${post.id}`, {
             method: "PUT",
             headers: {
                 accept: "application/json",
@@ -50,10 +43,10 @@ function EditPost(props: EditPostProps) {
             },
             body: JSON.stringify({
                 post: {
-                    id: post_id,
+                    id: post.id,
+                    category_id: category_id,
                     title: title,
                     body: body,
-                    category_id: categoryId,
                 },
             }),
         })
@@ -64,71 +57,30 @@ function EditPost(props: EditPostProps) {
                 setShowPostEditMode(false);
                 setShowPostTitle(title);
                 setShowPostBody(body);
-                setShowPostCategoryId(categoryId);
+                setShowPostCategoryId(category_id);
             })
             .catch((err) => {
                 console.error(err);
             });
     }
 
+    const handleCancelEdit = () => {
+        setShowPostEditMode(false);
+    };
+
     return (
-        <>
-            <CardContent>
-                <form onSubmit={handleEditSubmit}>
-                    <Typography variant="h5">Edit Post</Typography>
-                    <div>
-                        <FormControl required sx={{ marginTop: 2, marginBottom: 1, minWidth: 120 }}>
-                            <InputLabel id="category-select-required-label">Category</InputLabel>
-                            <Select
-                                labelId="category-select-required-label"
-                                id="category-select-required"
-                                value={categoryId}
-                                label="Category"
-                                onChange={(event) => setCategoryId(event.target.value as number)}
-                            >
-                                {categories.map((category) => (
-                                    <MenuItem value={category.id} key={category.id}>
-                                        {category.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </div>
-                    <TextField
-                        value={title}
-                        onChange={(event) => setTitle(event.target.value)}
-                        required
-                        fullWidth
-                        label="Post title"
-                        id="title"
-                        name="title"
-                        margin="normal"
-                    />
-                    <TextField
-                        value={body}
-                        onChange={(event) => setBody(event.target.value)}
-                        required
-                        fullWidth
-                        multiline
-                        minRows={5}
-                        label="Message"
-                        id="body"
-                        name="body"
-                        margin="dense"
-                    />
-                    <div style={{ float: "right", margin: "10px 5px 10px 0px" }}>
-                        <Stack direction="row" spacing={2}>
-                            <Button variant="outlined" onClick={handleClickCloseEdit}>
-                                Cancel
-                            </Button>
-                            <Button type="submit" variant="outlined">
-                                Save
-                            </Button>
-                        </Stack>
-                    </div>
-                </form>
-            </CardContent>
-        </>
+        <CardContent>
+            <PostForm
+                label="Edit Post"
+                submitButtonLabel="Save"
+                categories={categories}
+                defaultPostCategoryId={post.category_id}
+                defaultPostTitle={post.title}
+                defaultPostBody={post.body}
+                handleFormSubmit={handleEditSubmit}
+                handleFormCancel={handleCancelEdit}
+            />
+        </CardContent>
     );
 }
 

@@ -1,14 +1,14 @@
 import { User, Post, Category } from "./types";
 import Main from "./Main";
-import ForumThread from "./ForumThread";
+import Thread from "./Thread";
 import Header from "./Header";
 import CreatePost from "./post/CreatePost";
-import ErrorPage from "./ErrorPage";
+import Error from "./Error";
 import SignUp from "./auth/SignUp";
 import LogIn from "./auth/LogIn";
-import AuthComponent from "./auth/AuthComponent";
 import ScrollTop from "./ScrollTop";
 import useCookieState from "../hooks/useCookieState";
+import useStorageState from "../hooks/useStorageState";
 import * as React from "react";
 import { createBrowserRouter, RouterProvider, Outlet, ScrollRestoration } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,7 +21,8 @@ const API_ENDPOINT = "/api/v1";
 
 function App() {
     // Fetch dark or light Mode
-    const [prefersDarkMode, setPrefersDarkMode] = React.useState<boolean>(
+    const [prefersDarkMode, setPrefersDarkMode] = useStorageState(
+        "prefersDarkMode",
         useMediaQuery("(prefers-color-scheme: dark)"),
     );
 
@@ -167,7 +168,7 @@ function App() {
                 },
                 {
                     path: "/threads/:post_id",
-                    element: <ForumThread user={user} authToken={authToken} categories={categories} />,
+                    element: <Thread user={user} authToken={authToken} categories={categories} />,
                 },
                 {
                     path: "/create",
@@ -175,23 +176,15 @@ function App() {
                 },
                 {
                     path: "/signup",
-                    element: (
-                        <AuthComponent user={user}>
-                            <SignUp setAuthToken={setAuthToken} />
-                        </AuthComponent>
-                    ),
+                    element: <SignUp user={user} setAuthToken={setAuthToken} />,
                 },
                 {
                     path: "/login",
-                    element: (
-                        <AuthComponent user={user}>
-                            <LogIn setAuthToken={setAuthToken} />
-                        </AuthComponent>
-                    ),
+                    element: <LogIn user={user} setAuthToken={setAuthToken} />,
                 },
                 {
                     path: "*",
-                    element: <ErrorPage />,
+                    element: <Error />,
                 },
             ],
         },

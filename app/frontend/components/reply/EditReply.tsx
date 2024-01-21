@@ -1,10 +1,9 @@
 import { Reply } from "../types";
-import time_ago from "../time_ago";
+import time_ago from "../../helper/time_ago";
+import CommentForm from "../forms/CommentForm";
 import * as React from "react";
-import { Button, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 
 const API_ENDPOINT = "/api/v1/replies";
 
@@ -20,7 +19,7 @@ function EditReply(props: EditReplyProps) {
 
     const reply_id = reply.id;
     const reply_username = reply.username;
-    const [body, setBody] = React.useState<string>(reply.body);
+    const body = reply.body;
     const created_time_ago = time_ago(reply.created_at);
 
     // EDIT
@@ -30,6 +29,9 @@ function EditReply(props: EditReplyProps) {
 
     function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
+
+        const data = new FormData(event.currentTarget);
+        const body = data.get("body") as string;
 
         fetch(`${API_ENDPOINT}/${reply_id}`, {
             method: "PUT",
@@ -47,7 +49,7 @@ function EditReply(props: EditReplyProps) {
         })
             .then((res) => {
                 setShowReplyBody(body);
-                setShowReplyEditMode(false);
+                handleClickCloseEdit();
             })
             .catch((err) => {
                 console.error(err);
@@ -59,35 +61,14 @@ function EditReply(props: EditReplyProps) {
             <Typography sx={{ mb: 1.5 }} color="text.secondary" gutterBottom>
                 {reply_username} · {created_time_ago}
             </Typography>
-            <form onSubmit={handleEditSubmit}>
-                <TextField
-                    value={body}
-                    onChange={(event) => setBody(event.target.value)}
-                    onFocus={(event) =>
-                        event.currentTarget.setSelectionRange(
-                            event.currentTarget.value.length,
-                            event.currentTarget.value.length,
-                        )
-                    }
-                    autoFocus
-                    fullWidth
-                    multiline
-                    label="Edit reply"
-                    id="body"
-                    name="body"
-                    margin="dense"
-                    inputProps={{ maxLength: 5000 }}
-                    variant="standard"
-                />
-                <Stack direction="row" spacing={2} style={{ float: "right", margin: "10px 5px 10px 0px" }}>
-                    <Button variant="outlined" onClick={handleClickCloseEdit}>
-                        Cancel
-                    </Button>
-                    <Button type="submit" variant="outlined" disabled={body.trim() === ""}>
-                        Save
-                    </Button>
-                </Stack>
-            </form>
+            <CommentForm
+                label="Edit reply"
+                submitButtonLabel="Save"
+                autoFocus={true}
+                defaultCommentBody={body}
+                handleFormSubmit={handleEditSubmit}
+                handleFormCancel={handleClickCloseEdit}
+            />
         </Box>
     );
 }

@@ -1,3 +1,5 @@
+import AuthComponent from "./AuthComponent";
+import { User } from "../types";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -12,11 +14,12 @@ import Container from "@mui/material/Container";
 import { useNavigate, Link as RouterLink, useLocation } from "react-router-dom";
 
 type LogInProps = {
+    user: User | undefined;
     setAuthToken: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 function LogIn(props: LogInProps) {
-    const { setAuthToken } = props;
+    const { user, setAuthToken } = props;
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -52,6 +55,7 @@ function LogIn(props: LogInProps) {
                 setAuthToken(auth_token);
                 setShowError(false);
                 navigate(from?.pathname || "/", { replace: true });
+                navigate(0);
             })
             .catch((err) => {
                 console.error(err);
@@ -60,53 +64,55 @@ function LogIn(props: LogInProps) {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box
-                sx={{
-                    marginTop: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                    <LockOutlinedIcon />
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Log in
-                </Typography>
-                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: "100%" }}>
-                    <TextField
-                        margin="normal"
-                        required
-                        onChange={(event) => setUsername(event.target.value)}
-                        fullWidth
-                        id="username"
-                        label="Username"
-                        autoComplete="username"
-                        autoFocus
-                    />
+        <AuthComponent user={user}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                    }}
+                >
+                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                        <LockOutlinedIcon />
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Log in
+                    </Typography>
+                    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1, width: "100%" }}>
+                        <TextField
+                            margin="normal"
+                            required
+                            onChange={(event) => setUsername(event.target.value)}
+                            fullWidth
+                            id="username"
+                            label="Username"
+                            autoComplete="username"
+                            autoFocus
+                        />
 
-                    {showError && (
-                        <Typography variant="body2" color="red">
-                            Username not found
-                        </Typography>
-                    )}
+                        {showError && (
+                            <Typography variant="body2" color="red">
+                                Username not found
+                            </Typography>
+                        )}
 
-                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                        Log In
-                    </Button>
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Link component={RouterLink} to="/signup" state={{ from: from }} variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
+                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                            Log In
+                        </Button>
+                        <Grid container justifyContent="flex-end">
+                            <Grid item>
+                                <Link component={RouterLink} to="/signup" state={{ from: from }} variant="body2">
+                                    {"Don't have an account? Sign Up"}
+                                </Link>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </Box>
                 </Box>
-            </Box>
-        </Container>
+            </Container>
+        </AuthComponent>
     );
 }
 

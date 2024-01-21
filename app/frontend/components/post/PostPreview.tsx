@@ -1,17 +1,17 @@
-import { Category, Post } from "./types";
-import time_ago from "./time_ago";
-import styles from "../styles/App.module.css";
+import { Category, Post } from "../types";
+import time_ago from "../../helper/time_ago";
+import styles from "../../styles/App.module.css";
 import * as React from "react";
 import { Card, CardContent, CardActionArea, CardActions, Button, Chip } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { Link as RouterLink } from "react-router-dom";
 
-type ForumThreadPreviewProps = {
+type PostPreviewProps = {
     post: Post;
     categories: Category[];
 };
 
-function ForumThreadPreview(props: ForumThreadPreviewProps) {
+function PostPreview(props: PostPreviewProps) {
     const { post, categories } = props;
 
     return (
@@ -53,4 +53,4 @@ function ForumThreadPreview(props: ForumThreadPreviewProps) {
     );
 }
 
-export default ForumThreadPreview;
+export default PostPreview;

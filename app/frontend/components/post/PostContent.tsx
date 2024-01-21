@@ -1,27 +1,21 @@
 import EditPost from "./EditPost";
 import { Post, User, Category } from "../types";
-import time_ago from "../time_ago";
+import time_ago from "../../helper/time_ago";
+import DeleteDialog from "../dialogs/DeleteDialog";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, CardActions, IconButton, Chip } from "@mui/material";
+import { Button, Card, CardContent, CardActions, Chip } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import CloseIcon from "@mui/icons-material/Close";
-
 const API_ENDPOINT = "/api/v1/posts";
 
-type ShowPostProps = {
+type PostContentProps = {
     user: User | undefined;
     authToken: string | undefined;
     post: Post;
     categories: Category[];
 };
 
-function ShowPost(props: ShowPostProps) {
+function PostContent(props: PostContentProps) {
     const { user, authToken, post, categories } = props;
 
     const navigate = useNavigate();
@@ -119,37 +113,17 @@ function ShowPost(props: ShowPostProps) {
                                 </Button>
                             </>
                         )}
-                        <Dialog open={openDeleteDialog} fullWidth>
-                            <DialogTitle
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    paddingBottom: "10px",
-                                    borderBottom: 1,
-                                    borderColor: "divider",
-                                }}
-                            >
-                                Delete post
-                                <IconButton onClick={handleCloseDeleteDialog} size="small" sx={{ paddingTop: "0px" }}>
-                                    <CloseIcon />
-                                </IconButton>
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText sx={{ paddingTop: "20px" }}>
-                                    Are you sure you want to delete your post?
-                                    <br />
-                                    All comments under this post will also be deleted.
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions sx={{ paddingRight: 2 }}>
-                                <Button variant="outlined" onClick={handleCloseDeleteDialog}>
-                                    Keep
-                                </Button>
-                                <Button variant="outlined" color="error" onClick={handleClickDeletePost} autoFocus>
-                                    Delete
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
+
+                        <DeleteDialog
+                            open={openDeleteDialog}
+                            title="Delete post"
+                            body={
+                                "Are you sure you want to delete your post?\n" +
+                                "All comments under this post will also be deleted"
+                            }
+                            handleCloseDialog={handleCloseDeleteDialog}
+                            handleClickDelete={handleClickDeletePost}
+                        />
                     </CardActions>
                 </>
             )}
@@ -157,4 +131,4 @@ function ShowPost(props: ShowPostProps) {
     );
 }
 
-export default ShowPost;
+export default PostContent;

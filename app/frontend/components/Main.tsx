@@ -1,5 +1,5 @@
-import ForumThreadPreview from "./ForumThreadPreview";
-import ForumBanner from "./ForumBanner";
+import PostPreview from "./post/PostPreview";
+import Banner from "./Banner";
 import CategoryBar from "./toolbars/CategoryBar";
 import SearchBar from "./toolbars/SearchBar";
 import { Category, Post } from "./types";
@@ -53,7 +53,7 @@ function Main(props: MainProps) {
 
     return (
         <Container fixed={true}>
-            <ForumBanner />
+            <Banner />
             <CategoryBar
                 categories={categories}
                 categoryIdFilter={categoryIdFilter}
@@ -67,7 +67,7 @@ function Main(props: MainProps) {
             />
 
             {posts.map((post) => (
-                <ForumThreadPreview post={post} categories={categories} key={post.id} />
+                <PostPreview post={post} categories={categories} key={post.id} />
             ))}
 
             <div style={{ minHeight: "300px" }}>
