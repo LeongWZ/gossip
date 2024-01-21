@@ -71,7 +71,7 @@ function EditPost(props: EditPostProps) {
     return (
         <CardContent>
             <PostForm
-                label="Edit Post"
+                label="Edit post"
                 submitButtonLabel="Save"
                 categories={categories}
                 defaultPostCategoryId={post.category_id}

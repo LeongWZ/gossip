@@ -1,5 +1,5 @@
 import { Reply } from "../types";
-import time_ago from "../../helper/time_ago";
+import time_ago from "../../helpers/time_ago";
 import CommentForm from "../forms/CommentForm";
 import * as React from "react";
 import { Box } from "@mui/material";

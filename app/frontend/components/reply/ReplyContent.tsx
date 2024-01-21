@@ -1,7 +1,7 @@
 import CreateReply from "./CreateReply";
 import EditReply from "./EditReply";
 import { Reply, User } from "../types";
-import time_ago from "../../helper/time_ago";
+import time_ago from "../../helpers/time_ago";
 import DeleteDialog from "../dialogs/DeleteDialog";
 import LogInSignUpDialog from "../dialogs/LogInSignUpDialog";
 import * as React from "react";

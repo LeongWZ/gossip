@@ -1,6 +1,6 @@
 import EditComment from "./EditComment";
 import { Comment, Reply, User } from "../types";
-import time_ago from "../../helper/time_ago";
+import time_ago from "../../helpers/time_ago";
 import CreateReply from "../reply/CreateReply";
 import ReplyContent from "../reply/ReplyContent";
 import DeleteDialog from "../dialogs/DeleteDialog";

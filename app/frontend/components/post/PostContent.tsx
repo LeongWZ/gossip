@@ -1,6 +1,6 @@
 import EditPost from "./EditPost";
 import { Post, User, Category } from "../types";
-import time_ago from "../../helper/time_ago";
+import time_ago from "../../helpers/time_ago";
 import DeleteDialog from "../dialogs/DeleteDialog";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
