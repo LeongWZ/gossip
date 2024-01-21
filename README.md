@@ -9,30 +9,32 @@ Submission for CVWO 23/24 Assignment
 
 1. To prepare the Docker image, run:
 
-```bash
-docker-compose build
-```
+   ```bash
+   docker-compose build
+   ```
 
 2. To start 'rails' (backend), 'vite' (frontend) and 'postgres' (database) services, run:
 
-```bash
-docker-compose up
-```
+   ```bash
+   docker-compose up
+   ```
 
 3. (Required for first-time setup) To migrate and seed database:
 
-First, open another terminal and access remote shell of 'rails' service container:
+   First, open another terminal and access remote shell of 'rails' service container:
 
-```bash
-docker-compose run --rm --entrypoint "/bin/sh" rails
-```
+   ```bash
+   docker-compose run --rm --entrypoint "/bin/sh" rails
+   ```
 
-Then, migrate and seed database using Rails via remote shell:
-```sh
-rails db:migrate
-rails db:seed
-exit
-```
+
+   Then, migrate and seed database using Rails via remote shell:
+
+   ```sh
+   rails db:migrate
+   rails db:seed
+   exit
+   ```
 
 4. To run Gossip web app, go to http://0.0.0.0:3000
 
