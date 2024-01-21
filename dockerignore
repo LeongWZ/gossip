@@ -1,7 +1,0 @@
-node_modules
-vendor
-tmp
-log
-test
-.envrc
-.env
