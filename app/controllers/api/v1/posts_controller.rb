@@ -73,7 +73,7 @@ class Api::V1::PostsController < ApplicationController
   def sort
     order_option = case params[:sort_by]
       when "top"
-        { comments_count: :desc }
+        Arel.sql('comments_count + replies_count DESC')
       else
         { created_at: :desc }
       end
