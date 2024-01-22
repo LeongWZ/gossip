@@ -20,15 +20,10 @@ function CreateReply(props: CreateReplyProps) {
     const { user, authToken, comment_id, post_id, recipient_username, refreshComments, refreshReplies, handleClose } =
         props;
 
-    function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
+    function handleCreateFormSubmit(body: string): void {
         if (user === undefined) {
             return;
         }
-
-        const data = new FormData(event.currentTarget);
-        const body = data.get("body") as string;
 
         fetch(API_ENDPOINT, {
             method: "POST",
@@ -63,7 +58,7 @@ function CreateReply(props: CreateReplyProps) {
                 submitButtonLabel="Reply"
                 autoFocus={true}
                 defaultCommentBody={recipient_username === "" ? "" : `@${recipient_username} `}
-                handleFormSubmit={handleCreateSubmit}
+                handleFormData={handleCreateFormSubmit}
                 handleFormCancel={handleClose}
             />
         </Box>

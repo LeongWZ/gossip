@@ -18,17 +18,10 @@ function CreatePost(props: CreatePostProps) {
 
     const navigate = useNavigate();
 
-    function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
+    function handleCreateFormData(title: string, body: string, category_id: number): void {
         if (user === undefined) {
             return;
         }
-
-        const data = new FormData(event.currentTarget);
-        const title = data.get("title") as string;
-        const body = data.get("body") as string;
-        const category_id = parseInt(data.get("category_id") as string);
 
         fetch(API_ENDPOINT, {
             method: "POST",
@@ -73,7 +66,7 @@ function CreatePost(props: CreatePostProps) {
                         defaultPostCategoryId={undefined}
                         defaultPostTitle=""
                         defaultPostBody=""
-                        handleFormSubmit={handleCreateSubmit}
+                        handleFormData={handleCreateFormData}
                         handleFormCancel={() => navigate("/")}
                     />
                 </CardContent>

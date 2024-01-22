@@ -11,7 +11,7 @@ type PostFormProps = {
     defaultPostCategoryId: number | undefined;
     defaultPostTitle: string;
     defaultPostBody: string;
-    handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    handleFormData: (title: string, body: string, category_id: number) => void;
     handleFormCancel: () => void;
 };
 
@@ -23,9 +23,20 @@ function PostForm(props: PostFormProps) {
         defaultPostCategoryId,
         defaultPostTitle,
         defaultPostBody,
-        handleFormSubmit,
+        handleFormData,
         handleFormCancel,
     } = props;
+
+    function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        const data = new FormData(event.currentTarget);
+        const title = data.get("title") as string;
+        const body = data.get("body") as string;
+        const category_id = parseInt(data.get("category_id") as string);
+
+        handleFormData(title, body, category_id);
+    }
 
     return (
         <form onSubmit={handleFormSubmit}>

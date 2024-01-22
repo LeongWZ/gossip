@@ -27,12 +27,7 @@ function EditReply(props: EditReplyProps) {
         setShowReplyEditMode(false);
     };
 
-    function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        const data = new FormData(event.currentTarget);
-        const body = data.get("body") as string;
-
+    function handleEditFormData(body: string): void {
         fetch(`${API_ENDPOINT}/${reply_id}`, {
             method: "PUT",
             headers: {
@@ -66,7 +61,7 @@ function EditReply(props: EditReplyProps) {
                 submitButtonLabel="Save"
                 autoFocus={true}
                 defaultCommentBody={body}
-                handleFormSubmit={handleEditSubmit}
+                handleFormData={handleEditFormData}
                 handleFormCancel={handleClickCloseEdit}
             />
         </Box>

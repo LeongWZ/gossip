@@ -22,12 +22,7 @@ function EditComment(props: EditCommentProps) {
     const body = comment.body;
     const created_time_ago = time_ago(comment.created_at);
 
-    function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        const data = new FormData(event.currentTarget);
-        const body = data.get("body") as string;
-
+    function handleEditFormData(body: string): void {
         fetch(`${API_ENDPOINT}/${comment_id}`, {
             method: "PUT",
             headers: {
@@ -66,7 +61,7 @@ function EditComment(props: EditCommentProps) {
                 submitButtonLabel="Save"
                 autoFocus={true}
                 defaultCommentBody={body}
-                handleFormSubmit={handleEditSubmit}
+                handleFormData={handleEditFormData}
                 handleFormCancel={handleClickCloseEdit}
             />
         </Box>

@@ -26,14 +26,7 @@ function EditPost(props: EditPostProps) {
         setShowPostCategoryId,
     } = props;
 
-    function handleEditSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
-        const data = new FormData(event.currentTarget);
-        const title = data.get("title") as string;
-        const body = data.get("body") as string;
-        const category_id = parseInt(data.get("category_id") as string);
-
+    function handleEditFormData(title: string, body: string, category_id: number): void {
         fetch(`${API_ENDPOINT}/${post.id}`, {
             method: "PUT",
             headers: {
@@ -77,7 +70,7 @@ function EditPost(props: EditPostProps) {
                 defaultPostCategoryId={post.category_id}
                 defaultPostTitle={post.title}
                 defaultPostBody={post.body}
-                handleFormSubmit={handleEditSubmit}
+                handleFormData={handleEditFormData}
                 handleFormCancel={handleCancelEdit}
             />
         </CardContent>

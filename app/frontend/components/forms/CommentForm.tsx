@@ -7,12 +7,12 @@ type CommentFormProps = {
     submitButtonLabel: string;
     autoFocus: boolean;
     defaultCommentBody: string;
-    handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+    handleFormData: (body: string) => void;
     handleFormCancel: () => void;
 };
 
 function CommentForm(props: CommentFormProps) {
-    const { label, submitButtonLabel, autoFocus, defaultCommentBody, handleFormSubmit, handleFormCancel } = props;
+    const { label, submitButtonLabel, autoFocus, defaultCommentBody, handleFormData, handleFormCancel } = props;
 
     const [body, setBody] = React.useState<string>(defaultCommentBody);
 
@@ -23,13 +23,18 @@ function CommentForm(props: CommentFormProps) {
         setShowActionButtons(false);
     };
 
+    function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+
+        const data = new FormData(event.currentTarget);
+        const body = data.get("body") as string;
+
+        resetForm();
+        handleFormData(body);
+    }
+
     return (
-        <form
-            onSubmit={(event) => {
-                resetForm();
-                handleFormSubmit(event);
-            }}
-        >
+        <form onSubmit={handleFormSubmit}>
             <TextField
                 name="body"
                 value={body}

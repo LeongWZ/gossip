@@ -16,15 +16,10 @@ type CreateCommentProps = {
 function CreateComment(props: CreateCommentProps) {
     const { user, authToken, post_id, refreshComments } = props;
 
-    function handleCreateSubmit(event: React.FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-
+    function handleCreateFormData(body: string): void {
         if (user === undefined) {
             return;
         }
-
-        const data = new FormData(event.currentTarget);
-        const body = data.get("body") as string;
 
         fetch(API_ENDPOINT, {
             method: "POST",
@@ -72,7 +67,7 @@ function CreateComment(props: CreateCommentProps) {
                         submitButtonLabel="Comment"
                         autoFocus={false}
                         defaultCommentBody=""
-                        handleFormSubmit={handleCreateSubmit}
+                        handleFormData={handleCreateFormData}
                         handleFormCancel={() => undefined}
                     />
                 )}
