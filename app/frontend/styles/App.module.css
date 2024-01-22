@@ -1,3 +1,17 @@
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    /*
+    Removing input background colour for Chrome autocomplete
+    https://stackoverflow.com/questions/2781549/removing-input-background-colour-for-chrome-autocomplete
+    */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #23232350;
+}
+
 .fadedown {
     white-space: nowrap;
     mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0));
