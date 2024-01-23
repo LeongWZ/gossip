@@ -87,6 +87,9 @@ function CommentContent(props: CommentContentProps) {
             .then((replies) => {
                 setReplies(replies);
                 setIsRepliesLoading(false);
+                if (replies.length === 0 && openReplies) {
+                    setOpenReplies(false);
+                }
             })
             .catch((err) => {
                 console.error(err);
