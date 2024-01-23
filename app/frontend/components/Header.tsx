@@ -40,7 +40,7 @@ function HeaderMenu(props: HeaderMenuProps) {
     };
 
     return (
-        <div style={{ paddingTop: 1, paddingBottom: 1 }}>
+        <div>
             <IconButton
                 aria-controls={open ? "header-menu" : undefined}
                 aria-haspopup="true"
@@ -95,9 +95,11 @@ function Header(props: HeaderProps) {
             <Toolbar
                 sx={{
                     justifyContent: "space-between",
+                    alignItems: "center",
                     borderBottom: 1,
                     borderColor: "divider",
                     marginBottom: 4,
+                    paddingY: 1,
                 }}
             >
                 <Typography
@@ -105,14 +107,14 @@ function Header(props: HeaderProps) {
                     to="/"
                     variant="h5"
                     color="inherit"
-                    align="left"
-                    sx={{ textDecoration: "None", paddingTop: 1, paddingBottom: 1, paddingRight: 5 }}
+                    alignItems="center"
+                    sx={{ textDecoration: "None" }}
                 >
                     Gossip
                 </Typography>
 
                 {user === undefined ? (
-                    <Stack direction="row" spacing={2} justifyContent={"flex-end"}>
+                    <Stack direction="row" spacing={2} justifyContent={"flex-end"} alignItems="center">
                         <Button
                             component={RouterLink}
                             to="/signup"
@@ -136,8 +138,14 @@ function Header(props: HeaderProps) {
                     </Stack>
                 ) : (
                     <>
-                        <Stack direction="row" spacing={2} justifyContent={"flex-end"}>
-                            <Typography flex={1} paddingTop={1} paddingBottom={1} textAlign="right">
+                        <Stack
+                            direction="row"
+                            spacing={2}
+                            justifyContent="flex-end"
+                            alignItems="center"
+                            paddingLeft={10}
+                        >
+                            <Typography flex={1} alignItems="center" align="right">
                                 Welcome {user.username}
                             </Typography>
                             <HeaderMenu
