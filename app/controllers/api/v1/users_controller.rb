@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid, with: :handle_invalid_record
   rescue_from ActiveRecord::ValueTooLong, with: :handle_invalid_record
 
-	def create
+  def create
     user = User.create!(user_params)
     @auth_token = encode_token(user_id: user.id)
     render json: {
