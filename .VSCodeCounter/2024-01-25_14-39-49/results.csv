@@ -1,0 +1,132 @@
+"filename", "language", "JSON", "Ignore", "Shell Script", "Markdown", "TypeScript", "YAML", "Docker", "Ruby", "JavaScript", "HTML", "CSS", "erb", "TypeScript JSX", "comment", "blank", "total"
+"/home/leong/Desktop/Projects/gossip/.dockerignore", "Ignore", 0, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8
+"/home/leong/Desktop/Projects/gossip/.eslintrc.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 70, 0, 0, 0, 0, 0, 0, 70
+"/home/leong/Desktop/Projects/gossip/.prettierrc.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 1, 8
+"/home/leong/Desktop/Projects/gossip/Dockerfile", "Docker", 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 1, 6, 19
+"/home/leong/Desktop/Projects/gossip/README.md", "Markdown", 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 22, 57
+"/home/leong/Desktop/Projects/gossip/app/assets/config/manifest.js", "JavaScript", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/assets/stylesheets/application.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 15, 1, 16
+"/home/leong/Desktop/Projects/gossip/app/controllers/api/v1/auth_controller.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 5, 23
+"/home/leong/Desktop/Projects/gossip/app/controllers/api/v1/categories_controller.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 36, 0, 0, 0, 0, 0, 0, 12, 48
+"/home/leong/Desktop/Projects/gossip/app/controllers/api/v1/comments_controller.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 62, 0, 0, 0, 0, 0, 0, 18, 80
+"/home/leong/Desktop/Projects/gossip/app/controllers/api/v1/posts_controller.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 66, 0, 0, 0, 0, 0, 0, 19, 85
+"/home/leong/Desktop/Projects/gossip/app/controllers/api/v1/replies_controller.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0, 0, 17, 72
+"/home/leong/Desktop/Projects/gossip/app/controllers/api/v1/users_controller.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 7, 31
+"/home/leong/Desktop/Projects/gossip/app/controllers/application_controller.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 2, 8, 40
+"/home/leong/Desktop/Projects/gossip/app/controllers/homepage_controller.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 2, 7
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/App.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 171, 14, 19, 204
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/Banner.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 55, 0, 3, 58
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/Error.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 3, 26
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/Header.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 147, 3, 15, 165
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/Main.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 72, 1, 10, 83
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/ScrollTop.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 33, 0, 8, 41
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/Thread.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 7, 24, 159
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/auth/AuthComponent.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 5, 17
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/auth/LogIn.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 107, 0, 13, 120
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/auth/SignUp.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 108, 0, 13, 121
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/comment/CommentContent.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 196, 3, 29, 228
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/comment/CreateComment.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 70, 0, 10, 80
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/comment/EditComment.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 62, 0, 10, 72
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/dialogs/DeleteDialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 5, 54
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/dialogs/LogInSignUpDialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 55, 0, 6, 61
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/dialogs/LogOutDialog.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 56, 0, 6, 62
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/forms/CommentForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 67, 0, 12, 79
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/forms/PostForm.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 8, 89
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/post/CreatePost.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 69, 0, 10, 79
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/post/EditPost.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 73, 0, 8, 81
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/post/PostContent.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 119, 2, 14, 135
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/post/PostPreview.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52, 0, 5, 57
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/reply/CreateReply.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 8, 69
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/reply/EditReply.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 62, 1, 9, 72
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/reply/ReplyContent.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 134, 2, 21, 157
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/toolbars/CategoryBar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43, 0, 6, 49
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/toolbars/SearchBar.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 139, 1, 11, 151
+"/home/leong/Desktop/Projects/gossip/app/frontend/components/types.d.ts", "TypeScript", 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 53
+"/home/leong/Desktop/Projects/gossip/app/frontend/entrypoints/index.tsx", "TypeScript JSX", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 0, 2, 10
+"/home/leong/Desktop/Projects/gossip/app/frontend/helpers/time_ago.ts", "TypeScript", 0, 0, 0, 0, 27, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 35
+"/home/leong/Desktop/Projects/gossip/app/frontend/hooks/useCookieState.ts", "TypeScript", 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 25
+"/home/leong/Desktop/Projects/gossip/app/frontend/hooks/useStorageState.ts", "TypeScript", 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 1, 8, 33
+"/home/leong/Desktop/Projects/gossip/app/frontend/styles/App.module.css", "CSS", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 4, 2, 19
+"/home/leong/Desktop/Projects/gossip/app/helpers/api/v1/auth_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/helpers/api/v1/categories_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/helpers/api/v1/comments_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/helpers/api/v1/posts_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/helpers/api/v1/replies_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/helpers/api/v1/users_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/helpers/application_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/helpers/homepage_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/models/application_record.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 4
+"/home/leong/Desktop/Projects/gossip/app/models/category.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 1, 4
+"/home/leong/Desktop/Projects/gossip/app/models/comment.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 6
+"/home/leong/Desktop/Projects/gossip/app/models/post.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"/home/leong/Desktop/Projects/gossip/app/models/reply.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 6
+"/home/leong/Desktop/Projects/gossip/app/models/user.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 2, 8
+"/home/leong/Desktop/Projects/gossip/app/views/api/v1/categories/index.html.erb", "erb", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/views/api/v1/comments/index.html.erb", "erb", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/views/api/v1/posts/index.html.erb", "erb", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/views/api/v1/replies/index.html.erb", "erb", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 1, 3
+"/home/leong/Desktop/Projects/gossip/app/views/homepage/index.html.erb", "erb", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1
+"/home/leong/Desktop/Projects/gossip/app/views/layouts/application.html.erb", "erb", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 23, 0, 0, 6, 29
+"/home/leong/Desktop/Projects/gossip/config.ru", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 1, 3, 7
+"/home/leong/Desktop/Projects/gossip/config/application.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 18, 6, 38
+"/home/leong/Desktop/Projects/gossip/config/boot.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 4
+"/home/leong/Desktop/Projects/gossip/config/database.yml", "YAML", 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 59, 10, 87
+"/home/leong/Desktop/Projects/gossip/config/environment.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 2, 6
+"/home/leong/Desktop/Projects/gossip/config/environments/development.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 21, 18, 63
+"/home/leong/Desktop/Projects/gossip/config/environments/production.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 35, 21, 76
+"/home/leong/Desktop/Projects/gossip/config/environments/test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 17, 0, 0, 0, 0, 0, 20, 14, 51
+"/home/leong/Desktop/Projects/gossip/config/initializers/assets.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 8, 4, 13
+"/home/leong/Desktop/Projects/gossip/config/initializers/content_security_policy.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 29, 6, 35
+"/home/leong/Desktop/Projects/gossip/config/initializers/cors.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 2, 10
+"/home/leong/Desktop/Projects/gossip/config/initializers/filter_parameter_logging.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 4, 2, 9
+"/home/leong/Desktop/Projects/gossip/config/initializers/inflections.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14, 3, 17
+"/home/leong/Desktop/Projects/gossip/config/initializers/permissions_policy.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 1, 12
+"/home/leong/Desktop/Projects/gossip/config/locales/en.yml", "YAML", 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 30, 2, 34
+"/home/leong/Desktop/Projects/gossip/config/puma.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 28, 8, 44
+"/home/leong/Desktop/Projects/gossip/config/routes.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 3, 9, 33
+"/home/leong/Desktop/Projects/gossip/config/vite.json", "JSON", 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 18
+"/home/leong/Desktop/Projects/gossip/db/migrate/20231223043724_create_comments.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 11
+"/home/leong/Desktop/Projects/gossip/db/migrate/20231223140317_create_posts.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 11
+"/home/leong/Desktop/Projects/gossip/db/migrate/20231228052241_link_comments_to_post.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 2, 10
+"/home/leong/Desktop/Projects/gossip/db/migrate/20231231165658_add_comments_count.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 6
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240101104014_create_users.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 2, 12
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240103172552_set_username_limit.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240104045753_remove_user_password_and_bio.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240104064037_add_username_to_post_and_comment.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 7
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240110132614_create_categories.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 2, 11
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240110133050_link_posts_to_category.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240112092009_create_replies.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 3, 13
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240112173602_add_replies_count.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 6
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240113024722_link_replies_to_post_though_comment.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 0, 2, 10
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240118170803_link_posts_to_user.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 3, 12
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240118171000_link_comments_to_user.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 3, 12
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240118180250_link_replies_to_user.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 3, 12
+"/home/leong/Desktop/Projects/gossip/db/migrate/20240121085253_add_default_posts_count_to_category.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 1, 6
+"/home/leong/Desktop/Projects/gossip/db/schema.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 0, 0, 0, 12, 8, 70
+"/home/leong/Desktop/Projects/gossip/db/seeds.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 7, 2, 15
+"/home/leong/Desktop/Projects/gossip/docker-compose.yml", "YAML", 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 1, 39
+"/home/leong/Desktop/Projects/gossip/docker-rails.sh", "Shell Script", 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 5
+"/home/leong/Desktop/Projects/gossip/docker-vite.sh", "Shell Script", 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 5
+"/home/leong/Desktop/Projects/gossip/package-lock.json", "JSON", 7717, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 7718
+"/home/leong/Desktop/Projects/gossip/package.json", "JSON", 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 32
+"/home/leong/Desktop/Projects/gossip/public/404.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 1, 6, 68
+"/home/leong/Desktop/Projects/gossip/public/422.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 1, 6, 68
+"/home/leong/Desktop/Projects/gossip/public/500.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 0, 0, 60, 0, 0, 0, 1, 6, 67
+"/home/leong/Desktop/Projects/gossip/test/controllers/api/v1/auth_controller_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/controllers/api/v1/categories_controller_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/controllers/api/v1/comments_controller_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/controllers/api/v1/posts_controller_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/controllers/api/v1/replies_controller_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/controllers/api/v1/users_controller_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/controllers/homepage_controller_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 2, 9
+"/home/leong/Desktop/Projects/gossip/test/fixtures/categories.yml", "YAML", 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 3, 10
+"/home/leong/Desktop/Projects/gossip/test/fixtures/comments.yml", "YAML", 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 3, 10
+"/home/leong/Desktop/Projects/gossip/test/fixtures/posts.yml", "YAML", 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 3, 10
+"/home/leong/Desktop/Projects/gossip/test/fixtures/replies.yml", "YAML", 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 1, 3, 10
+"/home/leong/Desktop/Projects/gossip/test/models/category_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/models/comment_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/models/post_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/models/reply_test.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 2, 8
+"/home/leong/Desktop/Projects/gossip/test/test_helper.rb", "Ruby", 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 3, 4, 14
+"/home/leong/Desktop/Projects/gossip/vite.config.ts", "TypeScript", 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 14
+"Total", "-", 7765, 8, 4, 35, 129, 82, 12, 693, 77, 182, 13, 32, 2252, 404, 686, 12374
