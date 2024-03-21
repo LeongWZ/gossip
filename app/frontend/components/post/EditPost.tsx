@@ -51,6 +51,13 @@ function EditPost(props: EditPostProps) {
                 setShowPostTitle(title);
                 setShowPostBody(body);
                 setShowPostCategoryId(category_id);
+
+                // TODO: Replace with hook
+                if (post !== null) {
+                    post.title = title;
+                    post.body = body;
+                    post.category_id = category_id;
+                }
             })
             .catch((err) => {
                 console.error(err);

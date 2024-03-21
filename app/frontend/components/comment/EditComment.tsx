@@ -40,6 +40,11 @@ function EditComment(props: EditCommentProps) {
             .then((res) => {
                 setShowCommentEditMode(false);
                 setShowCommentBody(body);
+
+                // TODO: Replace with hook
+                if (comment !== null) {
+                    comment.body = body;
+                }
             })
             .catch((err) => {
                 console.error(err);

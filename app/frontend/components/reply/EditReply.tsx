@@ -45,6 +45,11 @@ function EditReply(props: EditReplyProps) {
             .then((res) => {
                 setShowReplyBody(body);
                 handleClickCloseEdit();
+
+                // TODO: Replace with hook
+                if (reply !== null) {
+                    reply.body = body;
+                }
             })
             .catch((err) => {
                 console.error(err);
